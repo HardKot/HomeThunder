@@ -37,12 +37,12 @@ public class UserSchema extends BaseSchema {
     private Set<RuleDetailSchema> ruleDetailSet = Set.of();
 
 
-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
-    @AttributeOverrides({
-            @AttributeOverride(name = "role", column = @Column(name = "role_id")),
-            @AttributeOverride(name = "activateTo", column = @Column(name = "activate_to"))
-    })
-    private RoleDetailSchema roleDetail;
+//    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+//    @AttributeOverrides({
+//            @AttributeOverride(name = "role", column = @Column(name = "role_id")),
+//            @AttributeOverride(name = "activateTo", column = @Column(name = "activate_to"))
+//    })
+//    private RoleDetailSchema roleDetail;
 
     @Column(name = "email", table = "user_email")
     private String email;
@@ -70,7 +70,7 @@ public class UserSchema extends BaseSchema {
         bannedBefore  = entity.getBannedBefore();
 
         ruleDetailSet = entity.getRuleDetailSet().stream().map(RuleDetailSchema::new).collect(Collectors.toSet());
-        roleDetail    = new RoleDetailSchema(entity.getRoleDetail());
+//        roleDetail    = new RoleDetailSchema(entity.getRoleDetail());
 
     }
 
@@ -91,7 +91,7 @@ public class UserSchema extends BaseSchema {
         user.setPassword(password);
         user.setBannedBefore(bannedBefore);
 
-        user.setRoleDetail(roleDetail.toRoleDetail());
+//        user.setRoleDetail(roleDetail.toRoleDetail());
 
 
         return user;
