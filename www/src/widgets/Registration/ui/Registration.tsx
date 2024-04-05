@@ -5,7 +5,6 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import {UserDataForm} from "@/features/UserDataForm";
 import {RegistrationByEmail} from "@/features/Registration/RegistrationByEmail";
-import {DevTool} from "@hookform/devtools";
 import {FormProvider} from "react-hook-form";
 
 export const Registration = () => {

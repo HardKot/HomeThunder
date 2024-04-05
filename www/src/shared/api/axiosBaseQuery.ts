@@ -3,17 +3,20 @@ import axiosInstance from "@/shared/api/axiosInstance";
 import {BaseQueryFn} from "@reduxjs/toolkit/query";
 
 interface AxiosBaseQueryConfig {
-  baseUrl: string
+  baseURL?: string
+  pathname?: string
 }
 
 type AxiosBaseQuery = (config: AxiosBaseQueryConfig) => BaseQueryFn<AxiosRequestConfig & { method: AxiosMethod }>
 
 export const axiosBaseQuery: AxiosBaseQuery =
-  ({baseUrl} = {baseUrl: ''}) =>
+  ({baseURL, pathname = ""} = {baseURL: ''}) =>
     async ({url, ...config}: AxiosRequestConfig) => {
       try {
+        url = pathname + url
         return await axiosInstance({
-          url: baseUrl + url,
+          baseURL,
+          url,
           ...config
         })
       } catch (axiosError) {

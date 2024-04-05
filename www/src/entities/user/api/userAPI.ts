@@ -5,7 +5,7 @@ import {UserEntity} from "@/entities/user/models/UserEntity";
 
 export const userAPI = createApi({
   reducerPath: 'userAPI',
-  baseQuery: axiosBaseQuery({baseUrl: 'https://api.localhost/users',}),
+  baseQuery: axiosBaseQuery({baseUrl: 'https://api.localhost/',}),
   endpoints: build => ({
     registration: build.mutation<UserEntity, RegistrationForm>({
       query: (data) => ({url: "/", method: AxiosMethod.POST, data})

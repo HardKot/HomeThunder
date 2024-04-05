@@ -21,8 +21,9 @@ export const RegistrationByEmail = () => {
             margin="normal"
             fullWidth
             id="patronymic"
-            label={t('Отчество')}
-            autoComplete="patronymic"
+            label={t('Эл.почта')}
+            autoComplete="email"
+            required
           />}
       />
 

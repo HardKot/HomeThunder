@@ -3,6 +3,7 @@ package com.homethunder.homethunder.useCase.user;
 import com.homethunder.homethunder.domain.user.Gender;
 import com.homethunder.homethunder.domain.user.User;
 import com.homethunder.homethunder.domain.user.UserGateway;
+import com.homethunder.homethunder.useCase.user.dto.IUserRegistration;
 import com.leakyabstractions.result.api.Result;
 import com.leakyabstractions.result.core.Results;
 
@@ -10,10 +11,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 
-public class UserInteractor {
+public class UserInteract {
     private final UserGateway userDatabaseGateway;
 
-    public UserInteractor(UserGateway userDatabaseGateway) {
+    public UserInteract(UserGateway userDatabaseGateway) {
         this.userDatabaseGateway = userDatabaseGateway;
     }
 

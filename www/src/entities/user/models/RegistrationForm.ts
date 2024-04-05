@@ -1,6 +1,6 @@
 import {UserData} from "@/entities/user/models/UserData";
 
-export interface RegistrationForm extends UserData{
+export interface RegistrationForm extends UserData {
   email: string,
 
   password: string,

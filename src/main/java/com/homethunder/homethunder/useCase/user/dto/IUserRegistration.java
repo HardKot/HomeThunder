@@ -1,4 +1,4 @@
-package com.homethunder.homethunder.useCase.user;
+package com.homethunder.homethunder.useCase.user.dto;
 
 
 public interface IUserRegistration {
