@@ -1,5 +1,9 @@
-import {DocumentContext, Head, Html, Main, NextScript} from "next/document";
-import {documentGetInitialProps, DocumentHeadTags, DocumentHeadTagsProps} from "@mui/material-nextjs/v13-pagesRouter";
+import { DocumentContext, Head, Html, Main, NextScript } from "next/document";
+import {
+  documentGetInitialProps,
+  DocumentHeadTags,
+  DocumentHeadTagsProps,
+} from "@mui/material-nextjs/v13-pagesRouter";
 
 export default function Document(props: DocumentHeadTagsProps) {
   return (
@@ -15,6 +19,6 @@ export default function Document(props: DocumentHeadTagsProps) {
   );
 }
 
-export async function getInitialProps(ctx: DocumentContext)  {
+export async function getInitialProps(ctx: DocumentContext) {
   return await documentGetInitialProps(ctx, {});
 }

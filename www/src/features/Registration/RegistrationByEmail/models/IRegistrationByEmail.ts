@@ -1,6 +1,5 @@
-
 export interface IRegistrationByEmail {
-  email: string,
-  password: string,
-  passwordConfirmed: string,
+  email: string;
+  password: string;
+  passwordConfirmed: string;
 }

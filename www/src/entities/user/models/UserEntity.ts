@@ -1,5 +1,5 @@
-import {UserData} from "@/entities/user";
+import { UserData } from "@/entities/user";
 
 export interface UserEntity extends UserData {
-  id: string
+  id: string;
 }

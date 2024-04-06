@@ -1,20 +1,16 @@
-  import {serverSideTranslations} from "next-i18next/serverSideTranslations";
-import {RegistrationPage} from "@/pages/RegistrationPage";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { RegistrationPage } from "@/pages/RegistrationPage";
 
 const Registration = () => {
-  return (
-    <RegistrationPage />
-  )
-}
+  return <RegistrationPage />;
+};
 
-export default Registration
-
+export default Registration;
 
 export async function getServerSideProps({ locale }) {
-
-  return ({
+  return {
     props: {
-      ...(await serverSideTranslations(locale, ["common", "login"]))
-    }
-  })
+      ...(await serverSideTranslations(locale, ["common", "login"])),
+    },
+  };
 }

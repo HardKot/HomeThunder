@@ -3,11 +3,5 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  return (
-    <main
-      className={`flow-root`}
-    >
-
-    </main>
-  );
+  return <main className={`flow-root`}></main>;
 }

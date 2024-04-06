@@ -1,87 +1,103 @@
-import {useUserDataForm} from "../lib/useUserDataForm";
-import {Controller} from "react-hook-form";
-import {FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
-import {DatePicker} from "@mui/x-date-pickers";
+import { useUserDataForm } from "../lib/useUserDataForm";
+import { Controller } from "react-hook-form";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers";
 import moment from "moment/moment";
 
 export const UserDataForm = () => {
-  const {control, t} = useUserDataForm()
+  const { control, t } = useUserDataForm();
 
   return (
     <>
       <Controller
-        name={'firstname'}
+        name={"firstname"}
         control={control}
-        rules={{required: true}}
-        render={({field}) => <TextField
-          {...field}
-          margin="normal"
-          required
-          fullWidth
-          id="firstname"
-          label={t('Имя')}
-          autoComplete="firstname"
-        />}
+        rules={{ required: true }}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            margin="normal"
+            required
+            fullWidth
+            id="firstname"
+            label={t("Имя")}
+            autoComplete="firstname"
+          />
+        )}
       />
       <Controller
-        name={'lastname'}
+        name={"lastname"}
         control={control}
-        rules={{required: true}}
-        render={({field}) => <TextField
-          {...field}
-          margin="normal"
-          required
-          fullWidth
-          id="lastname"
-          label={t('Фамилия')}
-          autoComplete="lastname"
-        />}
+        rules={{ required: true }}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            margin="normal"
+            required
+            fullWidth
+            id="lastname"
+            label={t("Фамилия")}
+            autoComplete="lastname"
+          />
+        )}
       />
       <Controller
-        name={'patronymic'}
+        name={"patronymic"}
         control={control}
-        rules={{required: true}}
-        render={({field}) =>
+        rules={{ required: true }}
+        render={({ field }) => (
           <TextField
             {...field}
             margin="normal"
             fullWidth
             id="patronymic"
-            label={t('Отчество')}
+            label={t("Отчество")}
             autoComplete="patronymic"
-          />}
+          />
+        )}
       />
       <Controller
-        name={'gender'}
+        name={"gender"}
         control={control}
-        rules={{required: true}}
-        render={({field}) =>
+        rules={{ required: true }}
+        render={({ field }) => (
           <FormControl fullWidth>
             <InputLabel id="gender">Пол</InputLabel>
             <Select
               {...field}
               fullWidth
               id="gender"
-              label={t('Пол')}
+              label={t("Пол")}
               defaultValue={"Unknown"}
             >
               <MenuItem value={"Male"}>Мужской</MenuItem>
               <MenuItem value={"Female"}>Женский</MenuItem>
               <MenuItem value={"Unknown"}>Не определенно</MenuItem>
             </Select>
-          </FormControl>}
+          </FormControl>
+        )}
       />
       <Controller
-        name={'birthday'}
+        name={"birthday"}
         control={control}
-        rules={{required: true}}
-        render={({field}) =>
+        rules={{ required: true }}
+        render={({ field }) => (
           <FormControl fullWidth>
-            <DatePicker label={"Дата рождения"} {...field} disableFuture
-                        minDate={moment().date(1).month(1).year(1900)}/>
+            <DatePicker
+              label={"Дата рождения"}
+              {...field}
+              disableFuture
+              minDate={moment().date(1).month(1).year(1900)}
+            />
           </FormControl>
-        }
+        )}
       />
     </>
-  )
-}
+  );
+};

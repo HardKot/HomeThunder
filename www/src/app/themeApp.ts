@@ -1,8 +1,8 @@
-import {createTheme} from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 
 const themeApp = createTheme({
-  components: {  },
+  components: {},
   spacing: 4,
-})
+});
 
-export default themeApp
+export default themeApp;

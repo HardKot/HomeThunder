@@ -1,10 +1,13 @@
-import { TextField } from "@mui/material";
-
+import { Checkbox, FormControlLabel, TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
-import { useRegistrationByEmail } from "@/features/Registration/RegistrationByEmail/lib/useRegistrationByEmail";
+import { useLoginByEmail } from "@/features/Login/LoginByEmail/libs/useLoginByEmail";
 
-export const RegistrationByEmail = () => {
-  const { t, control } = useRegistrationByEmail();
+export interface LoginProps {
+  footer?: JSX.Element;
+}
+
+export const LoginByEmail = ({ footer }: LoginProps) => {
+  const { t, control } = useLoginByEmail();
 
   return (
     <>
@@ -16,15 +19,15 @@ export const RegistrationByEmail = () => {
           <TextField
             {...field}
             margin="normal"
+            required
             fullWidth
-            id="patronymic"
+            id="email"
             label={t("Эл.почта")}
             autoComplete="email"
-            required
+            autoFocus
           />
         )}
       />
-
       <Controller
         name={"password"}
         control={control}
@@ -38,24 +41,19 @@ export const RegistrationByEmail = () => {
             id="password"
             type={"password"}
             label={t("Пароль")}
+            autoComplete="password"
             autoFocus
           />
         )}
       />
       <Controller
-        name={"passwordConfirmed"}
+        name={"rememberMe"}
         control={control}
         rules={{ required: true }}
         render={({ field }) => (
-          <TextField
-            {...field}
-            margin="normal"
-            required
-            fullWidth
-            id="passwordConfirmed"
-            type={"password"}
-            label={t("Подтверждение пароля")}
-            autoFocus
+          <FormControlLabel
+            control={<Checkbox {...field} color="primary" />}
+            label={t("Запомнить меня")}
           />
         )}
       />

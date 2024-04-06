@@ -23,6 +23,6 @@ public class UserController {
         if (result.hasSuccess()) {
             return new UserDTO(result.getSuccess().get());
         }
-        return null;
+        return  null;
     }
 }
