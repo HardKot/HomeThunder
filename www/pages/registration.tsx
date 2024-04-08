@@ -7,7 +7,11 @@ const Registration = () => {
 
 export default Registration;
 
-export async function getServerSideProps({ locale }) {
+interface ServerSideProps {
+  locale: string;
+}
+
+export async function getServerSideProps({ locale }: ServerSideProps) {
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common", "login"])),

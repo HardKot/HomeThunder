@@ -11,7 +11,7 @@ import { DatePicker } from "@mui/x-date-pickers";
 import moment from "moment/moment";
 
 export const UserDataForm = () => {
-  const { control, t } = useUserDataForm();
+  const { control } = useUserDataForm();
 
   return (
     <>
@@ -26,7 +26,7 @@ export const UserDataForm = () => {
             required
             fullWidth
             id="firstname"
-            label={t("Имя")}
+            label={"Имя"}
             autoComplete="firstname"
           />
         )}
@@ -42,7 +42,7 @@ export const UserDataForm = () => {
             required
             fullWidth
             id="lastname"
-            label={t("Фамилия")}
+            label={"Фамилия"}
             autoComplete="lastname"
           />
         )}
@@ -57,7 +57,7 @@ export const UserDataForm = () => {
             margin="normal"
             fullWidth
             id="patronymic"
-            label={t("Отчество")}
+            label={"Отчество"}
             autoComplete="patronymic"
           />
         )}
@@ -73,7 +73,7 @@ export const UserDataForm = () => {
               {...field}
               fullWidth
               id="gender"
-              label={t("Пол")}
+              label={"Пол"}
               defaultValue={"Unknown"}
             >
               <MenuItem value={"Male"}>Мужской</MenuItem>

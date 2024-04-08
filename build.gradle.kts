@@ -36,7 +36,9 @@ dependencies {
     implementation("com.leakyabstractions:result:0.15.0.1")
 
 //    implementation("dev.hilla:hilla-react-spring-boot-starter")
-//    implementation("org.flywaydb:flyway-core")
+    implementation("org.flywaydb:flyway-core")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")

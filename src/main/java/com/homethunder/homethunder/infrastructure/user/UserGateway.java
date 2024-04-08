@@ -2,23 +2,33 @@ package com.homethunder.homethunder.infrastructure.user;
 
 
 import com.homethunder.homethunder.domain.user.User;
-import com.homethunder.homethunder.domain.user.UserGateway;
+import com.homethunder.homethunder.domain.user.IUserGateway;
 import com.homethunder.homethunder.infrastructure.db.repository.UserRepository;
 import com.homethunder.homethunder.infrastructure.db.schema.UserSchema;
 import com.homethunder.homethunder.infrastructure.services.EmailSender;
-import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 
-public class UserDatabaseGateway implements UserGateway {
-    @Setter
+@Component
+public class UserGateway implements IUserGateway {
+    @Autowired
     private UserRepository userRepository;
 
-    @Setter
+    @Autowired
     private EmailSender emailSender;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Override
+    public String passwordEncoder(String password) {
+        return passwordEncoder.encode(password);
+    }
 
     @Override
     public User create(User user) {

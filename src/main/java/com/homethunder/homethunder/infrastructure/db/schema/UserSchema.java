@@ -47,7 +47,7 @@ public class UserSchema extends BaseSchema {
     @Column(name = "email", table = "user_email")
     private String email;
 
-    @Column(name = "isActivate", table = "user_email")
+    @Column(name = "is_activate", table = "user_email")
     private boolean isActivate;
 
     public UserSchema() {}

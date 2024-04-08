@@ -6,13 +6,24 @@ import { UserLogin } from "@/entities/user/models/UserLogin";
 
 export const userAPI = createApi({
   reducerPath: "userAPI",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://api.localhost/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8080" }),
   endpoints: (build) => ({
     registration: build.mutation<UserEntity, RegistrationForm>({
-      query: (data) => ({ url: "/user", method: AxiosMethod.POST, data }),
+      query: (body) => ({
+        url: "/registration",
+        method: AxiosMethod.POST,
+        body: {
+          ...body,
+          birthday: body.birthday.format("YYYY-MM-DD"),
+        },
+      }),
     }),
     login: build.mutation<UserEntity, UserLogin>({
-      query: (data) => ({ url: "/login", method: AxiosMethod.POST, data }),
+      query: (body) => ({
+        url: "/login",
+        method: AxiosMethod.POST,
+        body,
+      }),
     }),
   }),
 });

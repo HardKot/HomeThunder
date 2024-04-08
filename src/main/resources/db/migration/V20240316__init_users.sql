@@ -6,7 +6,7 @@ CREATE TABLE app_users
     lastname      VARCHAR(255) NOT NULL,
     patronymic    VARCHAR(255),
 
-    avatar        VARCHAR(255),
+    avatarURI        VARCHAR(255),
 
     gender        VARCHAR(255) NOT NULL,
     birthday      DATE,
@@ -62,5 +62,5 @@ CREATE TABLE user_email
 (
     user_id    UUID         NOT NULL REFERENCES app_users (id) UNIQUE,
     email      VARCHAR(255) NOT NULL,
-    isActivate BOOLEAN
+    is_activate BOOLEAN
 );

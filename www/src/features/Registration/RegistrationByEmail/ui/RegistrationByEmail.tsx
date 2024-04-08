@@ -4,7 +4,7 @@ import { Controller } from "react-hook-form";
 import { useRegistrationByEmail } from "@/features/Registration/RegistrationByEmail/lib/useRegistrationByEmail";
 
 export const RegistrationByEmail = () => {
-  const { t, control } = useRegistrationByEmail();
+  const { control } = useRegistrationByEmail();
 
   return (
     <>
@@ -18,7 +18,7 @@ export const RegistrationByEmail = () => {
             margin="normal"
             fullWidth
             id="patronymic"
-            label={t("Эл.почта")}
+            label={"Эл.почта"}
             autoComplete="email"
             required
           />
@@ -37,13 +37,12 @@ export const RegistrationByEmail = () => {
             fullWidth
             id="password"
             type={"password"}
-            label={t("Пароль")}
-            autoFocus
+            label={"Пароль"}
           />
         )}
       />
       <Controller
-        name={"passwordConfirmed"}
+        name={"confirmPassword"}
         control={control}
         rules={{ required: true }}
         render={({ field }) => (
@@ -52,10 +51,9 @@ export const RegistrationByEmail = () => {
             margin="normal"
             required
             fullWidth
-            id="passwordConfirmed"
+            id="confirmPassword"
             type={"password"}
-            label={t("Подтверждение пароля")}
-            autoFocus
+            label={"Подтверждение пароля"}
           />
         )}
       />

@@ -1,7 +1,11 @@
 package com.homethunder.homethunder.infrastructure.user.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.homethunder.homethunder.domain.user.Gender;
 import com.homethunder.homethunder.useCase.user.dto.IUserRegistration;
 import jakarta.validation.constraints.*;
+
+import java.time.LocalDate;
 
 public record RegistrationForm(
         @NotEmpty
@@ -12,16 +16,13 @@ public record RegistrationForm(
 
         String patronymic,
 
-        @NotEmpty
-        String gender,
+        @NotNull
+        Gender gender,
 
-        @NotEmpty
+        @NotNull
         @Past
-        String birthday,
-
-        @NotEmpty
-        @Pattern(regexp = "^\\d+$")
-        String phone,
+        @JsonFormat(pattern="yyyy-MM-dd")
+        LocalDate birthday,
 
         String avatarURI,
 

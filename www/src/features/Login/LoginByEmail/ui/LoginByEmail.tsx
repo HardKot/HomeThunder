@@ -2,11 +2,9 @@ import { Checkbox, FormControlLabel, TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useLoginByEmail } from "@/features/Login/LoginByEmail/libs/useLoginByEmail";
 
-export interface LoginProps {
-  footer?: JSX.Element;
-}
+export interface LoginProps {}
 
-export const LoginByEmail = ({ footer }: LoginProps) => {
+export const LoginByEmail = ({}: LoginProps) => {
   const { t, control } = useLoginByEmail();
 
   return (
