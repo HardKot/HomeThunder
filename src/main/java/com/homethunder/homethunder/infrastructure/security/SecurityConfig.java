@@ -1,4 +1,4 @@
-package com.homethunder.homethunder.infrastructure.config;
+package com.homethunder.homethunder.infrastructure.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
@@ -24,7 +25,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> {
                     request.requestMatchers("/login").permitAll();
                     request.requestMatchers("/registration").permitAll();
-//                    request.anyRequest().authenticated();
+                    request.anyRequest().authenticated();
                 })
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())

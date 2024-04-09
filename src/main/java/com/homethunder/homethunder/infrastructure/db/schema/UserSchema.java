@@ -5,6 +5,7 @@ import com.homethunder.homethunder.domain.user.Gender;
 import com.homethunder.homethunder.domain.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 @Entity
 @Data
 @Table(name = "app_users")
+@EqualsAndHashCode(callSuper = true)
 @SecondaryTable(name = "user_roles", pkJoinColumns = @PrimaryKeyJoinColumn(name = "user_id"))
 @SecondaryTable(name = "user_email", pkJoinColumns = @PrimaryKeyJoinColumn(name = "user_id"))
 public class UserSchema extends BaseSchema {

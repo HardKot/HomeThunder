@@ -1,6 +1,5 @@
 package com.homethunder.homethunder.useCase.user;
 
-import com.homethunder.homethunder.domain.user.Gender;
 import com.homethunder.homethunder.domain.user.User;
 import com.homethunder.homethunder.domain.user.IUserGateway;
 import com.homethunder.homethunder.useCase.user.dto.IUserRegistration;
