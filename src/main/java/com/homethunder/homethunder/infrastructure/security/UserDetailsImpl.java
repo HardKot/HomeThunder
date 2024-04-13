@@ -2,8 +2,10 @@ package com.homethunder.homethunder.infrastructure.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.homethunder.homethunder.domain.Rule;
+import com.homethunder.homethunder.domain.user.User;
 import com.homethunder.homethunder.infrastructure.db.schema.UserSchema;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,18 +28,18 @@ public class UserDetailsImpl implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
 
 
-    public static UserDetailsImpl build(UserSchema userSchema) {
+    public static UserDetailsImpl build(User user) {
         Set<Rule> ruleSet = Set.of();
 
-        for (UserSchema.RuleDetailSchema ruleDetailSchema : userSchema.getRuleDetailSet()) {
+        for (User.RuleDetail ruleDetailSchema : user.getRuleDetailSet()) {
             if (ruleDetailSchema.isActive()) ruleSet.add(ruleDetailSchema.getRule());
         }
 
 
         return new UserDetailsImpl(
-                userSchema.getId(),
-                userSchema.getEmail(),
-                userSchema.getPassword(),
+                user.getId(),
+                user.getEmail(),
+                user.getPassword(),
                 ruleSet.stream().map(rule -> new SimpleGrantedAuthority(rule.name())).toList()
         );
     }

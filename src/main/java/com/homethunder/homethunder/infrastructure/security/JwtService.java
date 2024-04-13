@@ -8,24 +8,30 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
+import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 
 @Service
 public class JwtService {
-    @Value("${token.signing.key}")
+    @Value("${jwt.secret}")
     private String jwtSigningKey;
 
+    @Value("${jwt.lifetime}")
+    private Duration jwtLifeTime;
+
+
     public String generateToken(UserDetailsImpl userDetails) {
+        Date currentDate = new Date();
         return Jwts.builder()
-                .header()
-                .and()
-                .issuer("homeThunder")
                 .subject(userDetails.getEmail())
                 .claim("rules", userDetails.getAuthorities())
                 .claim("uid", userDetails.getId())
-                .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + 100000 * 60 * 24))
+                .issuedAt(currentDate)
+                .expiration(new Date(currentDate.getTime() + jwtLifeTime.toMillis()))
                 .signWith(getSecretKey())
                 .compact();
     }
@@ -36,9 +42,17 @@ public class JwtService {
         return extractedEmail.equals(userDetails.getEmail()) && !isTokenExpired(token);
     }
 
-    private String extractEmail(String token) {
+    public String extractEmail(String token) {
         Claims claims = extractAllClaims(token);
         return claims.getSubject();
+    }
+
+    public UUID extractUID(String token) {
+        return extractAllClaims(token).get("uid", UUID.class);
+    }
+
+    public ArrayList<String> extractRule(String token) {
+        return extractAllClaims(token).get("rules", ArrayList.class);
     }
 
     private boolean isTokenExpired(String token) {
