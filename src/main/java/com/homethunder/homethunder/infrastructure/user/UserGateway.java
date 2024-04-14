@@ -5,8 +5,8 @@ import com.homethunder.homethunder.domain.user.User;
 import com.homethunder.homethunder.domain.user.IUserGateway;
 import com.homethunder.homethunder.infrastructure.db.repository.UserRepository;
 import com.homethunder.homethunder.infrastructure.db.schema.UserSchema;
-import com.homethunder.homethunder.infrastructure.services.EmailSender;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -15,14 +15,10 @@ import java.util.Optional;
 
 
 @Component
+@AllArgsConstructor
 public class UserGateway implements IUserGateway {
-    @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private EmailSender emailSender;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
@@ -63,6 +59,6 @@ public class UserGateway implements IUserGateway {
 
     @Override
     public void sendEmail(User user, String template) {
-
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
     }
 }

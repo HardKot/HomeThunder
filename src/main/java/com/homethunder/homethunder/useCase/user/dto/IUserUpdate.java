@@ -5,7 +5,7 @@ import com.homethunder.homethunder.domain.user.Gender;
 
 import java.time.LocalDate;
 
-public interface IUserRegistration {
+public interface IUserUpdate {
     String firstname();
     String lastname();
     String patronymic();
@@ -15,6 +15,4 @@ public interface IUserRegistration {
     LocalDate birthday();
 
     String email();
-    String password();
-    String confirmPassword();
 }
