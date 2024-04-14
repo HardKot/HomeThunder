@@ -43,7 +43,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         if (token != null && jwtService.isTokenValid(token)) {
             if (jwtService.isTokenExpired(token)) {
                 token = jwtService.regenerateToken(userDetailsServiceImpl.loadUserByUsername(jwtService.extractEmail(token)), token, request.getHeader("user-agent"));
-                response.addCookie(CookieLibs.setCookieAuth(token));
+                response.addCookie(CookieLibs.setCookieAuth(token, jwtService.extractRememberMe(token)));
             }
 
             String email = jwtService.extractEmail(token);

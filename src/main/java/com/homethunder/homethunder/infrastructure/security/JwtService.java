@@ -27,7 +27,7 @@ public class JwtService {
     @Autowired
     private JwtRepository jwtRepository;
 
-    public String generateToken(UserDetailsImpl userDetails, String deviceName) {
+    public String generateToken(UserDetailsImpl userDetails, String deviceName, boolean rememberMe) {
         JwtSchema jwtSchema = new JwtSchema();
         jwtSchema.setId(UUID.randomUUID());
         jwtSchema.setCreateAt(LocalDateTime.now());
@@ -43,6 +43,7 @@ public class JwtService {
                 .subject(userDetails.getEmail())
                 .claim("rules", userDetails.getAuthorities())
                 .claim("uid", userDetails.getId())
+                .claim("rememberMe", rememberMe)
                 .issuedAt(issuedAt)
                 .expiration(new Date(issuedAt.getTime() + jwtLifeTime.toMillis()))
                 .signWith(getSecretKey())
@@ -60,7 +61,7 @@ public class JwtService {
 
     public String regenerateToken(UserDetailsImpl userDetails, String token, String deviceName) {
         jwtRepository.deleteById(extractTokenID(token));
-        return generateToken(userDetails, deviceName);
+        return generateToken(userDetails, deviceName, extractRememberMe(token));
     }
 
     public UUID extractUID(String token) {
@@ -73,6 +74,10 @@ public class JwtService {
 
     public ArrayList<String> extractRule(String token) {
         return extractAllClaims(token).get("rules", ArrayList.class);
+    }
+
+    public boolean extractRememberMe(String token) {
+        return extractAllClaims(token).get("rememberMe", boolean.class);
     }
 
     public boolean isTokenExpired(String token) {

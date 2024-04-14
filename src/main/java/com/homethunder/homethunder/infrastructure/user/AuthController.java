@@ -40,7 +40,7 @@ public class AuthController {
 
         UserDetailsImpl userDetails = UserDetailsImpl.build(user);
 
-        response.addCookie(CookieLibs.setCookieAuth(jwtService.generateToken(userDetails, userAgent)));
+        response.addCookie(CookieLibs.setCookieAuth(jwtService.generateToken(userDetails, userAgent, true), true));
         response.setContentType("text/plain");
 
         return ResponseEntity.ok(new UserDTO(user));
@@ -56,7 +56,7 @@ public class AuthController {
         User user = userRepository.findByEmail(body.email()).get().toUser();
         UserDetailsImpl userDetails = UserDetailsImpl.build(user);
 
-        response.addCookie(CookieLibs.setCookieAuth(jwtService.generateToken(userDetails, userAgent)));
+        response.addCookie(CookieLibs.setCookieAuth(jwtService.generateToken(userDetails, userAgent, body.rememberMe()), body.rememberMe()));
         response.setContentType("text/plain");
 
         return ResponseEntity.ok(new UserDTO(user));
