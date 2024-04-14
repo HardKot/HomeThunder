@@ -2,6 +2,7 @@ package com.homethunder.homethunder.infrastructure.user;
 
 import com.homethunder.homethunder.domain.user.User;
 import com.homethunder.homethunder.infrastructure.db.repository.UserRepository;
+import com.homethunder.homethunder.infrastructure.libs.CookieLibs;
 import com.homethunder.homethunder.infrastructure.security.JwtService;
 import com.homethunder.homethunder.infrastructure.security.UserDetailsImpl;
 import com.homethunder.homethunder.infrastructure.user.dto.AuthForm;
@@ -10,7 +11,6 @@ import com.homethunder.homethunder.infrastructure.user.dto.UserDTO;
 import com.homethunder.homethunder.useCase.user.UserInteract;
 import com.homethunder.homethunder.useCase.user.UserInteractError;
 import com.leakyabstractions.result.api.Result;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -25,7 +25,7 @@ import org.springframework.http.HttpStatus;
 @RestController
 @AllArgsConstructor
 @RequestMapping
-public class AutController {
+public class AuthController {
     private UserInteract userInteract;
     private JwtService jwtService;
     private AuthenticationManager authenticationManager;
@@ -37,7 +37,9 @@ public class AutController {
         if (result.hasFailure()) return ResponseEntity.status(403).body(result.getFailure().get());
         User user = result.getSuccess().get();
 
-        response.addCookie(setTokenInCookie(user));
+        UserDetailsImpl userDetails = UserDetailsImpl.build(user);
+
+        response.addCookie(CookieLibs.setCookieAuth(jwtService.generateToken(userDetails)));
         response.setContentType("text/plain");
 
         return ResponseEntity.ok(new UserDTO(user));
@@ -51,21 +53,11 @@ public class AutController {
             return new ResponseEntity<>(HttpStatusCode.valueOf(HttpStatus.UNAUTHORIZED.value()));
         }
         User user = userRepository.findByEmail(body.email()).get().toUser();
+        UserDetailsImpl userDetails = UserDetailsImpl.build(user);
 
-        response.addCookie(setTokenInCookie(user));
+        response.addCookie(CookieLibs.setCookieAuth(jwtService.generateToken(userDetails)));
         response.setContentType("text/plain");
 
         return ResponseEntity.ok(new UserDTO(user));
-    }
-
-    private Cookie setTokenInCookie(User user) {
-        UserDetailsImpl userDetails = UserDetailsImpl.build(user);
-
-        Cookie cookie = new Cookie("Authorization", jwtService.generateToken(userDetails));
-        cookie.setPath("/");
-        cookie.setMaxAge(86400);
-        cookie.setDomain("localhost");
-
-        return cookie;
     }
 }

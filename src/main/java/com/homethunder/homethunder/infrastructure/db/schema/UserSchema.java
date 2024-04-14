@@ -6,6 +6,7 @@ import com.homethunder.homethunder.domain.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,8 +17,10 @@ import java.util.stream.Collectors;
 @Data
 @Table(name = "app_users")
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 @SecondaryTable(name = "user_roles", pkJoinColumns = @PrimaryKeyJoinColumn(name = "user_id"))
 @SecondaryTable(name = "user_email", pkJoinColumns = @PrimaryKeyJoinColumn(name = "user_id"))
+@SecondaryTable(name = "user_jwt_detail", pkJoinColumns = @PrimaryKeyJoinColumn(name = "user_id"))
 public class UserSchema extends BaseSchema {
     private String firstname;
     private String lastname;
@@ -51,8 +54,6 @@ public class UserSchema extends BaseSchema {
 
     @Column(name = "is_activate", table = "user_email")
     private boolean isActivate;
-
-    public UserSchema() {}
 
     public UserSchema(User entity) {
         useBaseEntity(entity);

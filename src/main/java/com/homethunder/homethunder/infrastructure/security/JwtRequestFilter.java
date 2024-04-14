@@ -1,5 +1,7 @@
 package com.homethunder.homethunder.infrastructure.security;
 
+import com.homethunder.homethunder.infrastructure.db.repository.JwtRepository;
+import com.homethunder.homethunder.infrastructure.libs.CookieLibs;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -7,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.expression.ExpressionException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +25,7 @@ import java.util.List;
 @Slf4j
 public class JwtRequestFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -35,15 +38,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             }
         }
 
-        if (token != null) {
-            String email = null;
-
-            try {
-                email = jwtService.extractEmail(token);
-            } catch (ExpressionException e) {
-                log.debug("Токен мертв");
+        if (token != null && jwtService.isTokenValid(token)) {
+            if (jwtService.isTokenExpired(token)) {
+                token = jwtService.regenerateToken(userDetailsServiceImpl.loadUserByUsername(jwtService.extractEmail(token)), token);
+                response.addCookie(CookieLibs.setCookieAuth(token));
             }
 
+            String email = jwtService.extractEmail(token);
             List<SimpleGrantedAuthority> grantedAuthorityList = List.of();
             for (String rule: jwtService.extractRule(token)) {
                 grantedAuthorityList.add(new SimpleGrantedAuthority(rule));

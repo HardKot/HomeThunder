@@ -47,6 +47,8 @@ public class UserInteract {
         user.setBirthday(dto.birthday());
         user.setEmail(dto.email());
 
+        user.setDeletedAt(null);
+
         return Results.success(userGateway.update(user));
     }
 
@@ -59,8 +61,13 @@ public class UserInteract {
     }
 
     public Result<User, UserInteractError> selfDelete(User user) {
-
         user.setDeletedAt(LocalDateTime.now().plus(Duration.ofDays(30)));
+
+        return Results.success(userGateway.update(user));
+    }
+
+    public Result<User, UserInteractError> recovery(User user) {
+        user.setDeletedAt(null);
 
         return Results.success(userGateway.update(user));
     }

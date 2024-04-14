@@ -14,4 +14,7 @@ public class MvcConfig {
         userInteract.setUserGateway(userGateway);
         return userInteract;
     }
+
+
+
 }

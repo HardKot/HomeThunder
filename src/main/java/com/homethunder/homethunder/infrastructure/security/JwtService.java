@@ -1,14 +1,16 @@
 package com.homethunder.homethunder.infrastructure.security;
 
-
+import com.homethunder.homethunder.infrastructure.db.repository.JwtRepository;
+import com.homethunder.homethunder.infrastructure.db.schema.JwtSchema;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
-import java.time.Duration;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
@@ -22,23 +24,32 @@ public class JwtService {
     @Value("${jwt.lifetime}")
     private Duration jwtLifeTime;
 
+    @Autowired
+    private JwtRepository jwtRepository;
 
     public String generateToken(UserDetailsImpl userDetails) {
-        Date currentDate = new Date();
+        JwtSchema jwtSchema = new JwtSchema();
+        jwtSchema.setId(UUID.randomUUID());
+        jwtSchema.setCreateAt(LocalDateTime.now());
+        jwtSchema.setUserId(userDetails.getId());
+
+        Date issuedAt = Date.from(jwtSchema.getCreateAt().atZone(ZoneOffset.systemDefault()).toInstant());
+
+        jwtRepository.save(jwtSchema);
+
         return Jwts.builder()
+                .id(jwtSchema.getId().toString())
                 .subject(userDetails.getEmail())
                 .claim("rules", userDetails.getAuthorities())
                 .claim("uid", userDetails.getId())
-                .issuedAt(currentDate)
-                .expiration(new Date(currentDate.getTime() + jwtLifeTime.toMillis()))
+                .issuedAt(issuedAt)
+                .expiration(new Date(issuedAt.getTime() + jwtLifeTime.toMillis()))
                 .signWith(getSecretKey())
                 .compact();
     }
 
-    public boolean isTokenValid(String token, UserDetailsImpl userDetails) {
-        String extractedEmail = extractEmail(token);
-
-        return extractedEmail.equals(userDetails.getEmail()) && !isTokenExpired(token);
+    public boolean isTokenValid(String token){
+        return jwtRepository.findById(extractTokenID(token)).isPresent();
     }
 
     public String extractEmail(String token) {
@@ -46,15 +57,24 @@ public class JwtService {
         return claims.getSubject();
     }
 
+    public String regenerateToken(UserDetailsImpl userDetails, String token) {
+        jwtRepository.deleteById(extractTokenID(token));
+        return generateToken(userDetails);
+    }
+
     public UUID extractUID(String token) {
         return extractAllClaims(token).get("uid", UUID.class);
+    }
+
+    public UUID extractTokenID(String token) {
+        return UUID.fromString(extractAllClaims(token).getId());
     }
 
     public ArrayList<String> extractRule(String token) {
         return extractAllClaims(token).get("rules", ArrayList.class);
     }
 
-    private boolean isTokenExpired(String token) {
+    public boolean isTokenExpired(String token) {
         Claims claims = extractAllClaims(token);
         return claims.getExpiration().before(new Date());
     }
@@ -65,6 +85,6 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token) throws JwtException {
-        return Jwts.parser().verifyWith(getSecretKey()).build().parseSignedClaims(token).getPayload()   ;
+        return Jwts.parser().verifyWith(getSecretKey()).build().parseSignedClaims(token).getPayload();
     }
 }
