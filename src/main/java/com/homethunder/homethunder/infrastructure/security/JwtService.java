@@ -27,11 +27,12 @@ public class JwtService {
     @Autowired
     private JwtRepository jwtRepository;
 
-    public String generateToken(UserDetailsImpl userDetails) {
+    public String generateToken(UserDetailsImpl userDetails, String deviceName) {
         JwtSchema jwtSchema = new JwtSchema();
         jwtSchema.setId(UUID.randomUUID());
         jwtSchema.setCreateAt(LocalDateTime.now());
         jwtSchema.setUserId(userDetails.getId());
+        jwtSchema.setDeviceName(deviceName);
 
         Date issuedAt = Date.from(jwtSchema.getCreateAt().atZone(ZoneOffset.systemDefault()).toInstant());
 
@@ -57,9 +58,9 @@ public class JwtService {
         return claims.getSubject();
     }
 
-    public String regenerateToken(UserDetailsImpl userDetails, String token) {
+    public String regenerateToken(UserDetailsImpl userDetails, String token, String deviceName) {
         jwtRepository.deleteById(extractTokenID(token));
-        return generateToken(userDetails);
+        return generateToken(userDetails, deviceName);
     }
 
     public UUID extractUID(String token) {

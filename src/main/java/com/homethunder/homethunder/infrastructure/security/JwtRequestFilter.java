@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,8 +29,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = null;
+        Cookie[] cookies = request.getCookies();
 
-        for (Cookie cookie : request.getCookies()) {
+        if (cookies == null) cookies = new Cookie[0];
+
+        for (Cookie cookie : cookies) {
             if (cookie.getName().equals("Authorization")) {
                 token = cookie.getValue();
                 break;
@@ -40,7 +42,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if (token != null && jwtService.isTokenValid(token)) {
             if (jwtService.isTokenExpired(token)) {
-                token = jwtService.regenerateToken(userDetailsServiceImpl.loadUserByUsername(jwtService.extractEmail(token)), token);
+                token = jwtService.regenerateToken(userDetailsServiceImpl.loadUserByUsername(jwtService.extractEmail(token)), token, request.getHeader("user-agent"));
                 response.addCookie(CookieLibs.setCookieAuth(token));
             }
 

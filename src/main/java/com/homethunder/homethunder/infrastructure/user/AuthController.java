@@ -25,6 +25,7 @@ import org.springframework.http.HttpStatus;
 @RestController
 @AllArgsConstructor
 @RequestMapping
+@CrossOrigin
 public class AuthController {
     private UserInteract userInteract;
     private JwtService jwtService;
@@ -32,21 +33,21 @@ public class AuthController {
     private UserRepository userRepository;
 
     @PostMapping("/registration")
-    public ResponseEntity<?> create(@Valid @RequestBody RegistrationForm body, HttpServletResponse response) {
+    public ResponseEntity<?> create(@Valid @RequestBody RegistrationForm body, HttpServletResponse response, @RequestHeader("user-agent") String userAgent) {
         Result<User, UserInteractError> result = userInteract.registration(body);
         if (result.hasFailure()) return ResponseEntity.status(403).body(result.getFailure().get());
         User user = result.getSuccess().get();
 
         UserDetailsImpl userDetails = UserDetailsImpl.build(user);
 
-        response.addCookie(CookieLibs.setCookieAuth(jwtService.generateToken(userDetails)));
+        response.addCookie(CookieLibs.setCookieAuth(jwtService.generateToken(userDetails, userAgent)));
         response.setContentType("text/plain");
 
         return ResponseEntity.ok(new UserDTO(user));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody AuthForm body, HttpServletResponse response) {
+    public ResponseEntity<?> login(@Valid @RequestBody AuthForm body, HttpServletResponse response, @RequestHeader("user-agent") String userAgent) {
         try {
                 authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(body.email(), body.password()));
         } catch (BadCredentialsException e) {
@@ -55,7 +56,7 @@ public class AuthController {
         User user = userRepository.findByEmail(body.email()).get().toUser();
         UserDetailsImpl userDetails = UserDetailsImpl.build(user);
 
-        response.addCookie(CookieLibs.setCookieAuth(jwtService.generateToken(userDetails)));
+        response.addCookie(CookieLibs.setCookieAuth(jwtService.generateToken(userDetails, userAgent)));
         response.setContentType("text/plain");
 
         return ResponseEntity.ok(new UserDTO(user));
