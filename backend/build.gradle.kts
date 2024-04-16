@@ -2,7 +2,6 @@ plugins {
     java
     id("org.springframework.boot") version "3.2.4"
     id("io.spring.dependency-management") version "1.1.4"
-//    id("dev.hilla") version "2.5.5"
 }
 
 group = "com.homethunder"
@@ -35,7 +34,6 @@ dependencies {
 
     implementation("com.leakyabstractions:result:0.15.0.1")
 
-//    implementation("dev.hilla:hilla-react-spring-boot-starter")
     implementation("org.flywaydb:flyway-core")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
@@ -50,22 +48,12 @@ dependencies {
 
     implementation("io.minio:minio:8.4.3")
 
-    implementation ("io.jsonwebtoken:jjwt-api:0.12.5")
-    runtimeOnly ("io.jsonwebtoken:jjwt-impl:0.12.5")
-    runtimeOnly ("io.jsonwebtoken:jjwt-jackson:0.12.5")
+    implementation("io.jsonwebtoken:jjwt-api:0.12.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.5")
 }
 
-dependencyManagement {
-    imports {
-//        mavenBom("dev.hilla:hilla-bom:${property("hillaVersion")}")
-    }
-}
 
 tasks.withType<Test> {
     useJUnitPlatform()
 }
-
-//
-//hilla {
-//
-//}

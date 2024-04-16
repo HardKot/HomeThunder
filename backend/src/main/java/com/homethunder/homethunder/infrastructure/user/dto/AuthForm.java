@@ -16,7 +16,9 @@ public record AuthForm(
         @NotEmpty
         @Size(min = 8, max = 100)
         @Pattern(regexp = "^[a-zA-Z\\d%*()?@#$~{}]+$")
-        String password
+        String password,
+
+        boolean rememberMe
 ) implements IUserLogin {
 
 }
