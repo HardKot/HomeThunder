@@ -1,17 +1,24 @@
+'use client'
+
 import { useForm } from "react-hook-form";
 import { RegistrationForm, useRegistrationMutation } from "@/entities/user";
-import { useTranslation } from "next-i18next";
+import {useCallback} from "react";
+import {useRouter} from "next/navigation";
 
 export const useRegistration = () => {
   const formMethod = useForm<RegistrationForm>();
-  const { t } = useTranslation();
-  const [registration, { isLoading }] = useRegistrationMutation();
+  const [registrationTrigger, { isLoading }] = useRegistrationMutation();
+  const router = useRouter();
+
+  const registration = useCallback(async (form: RegistrationForm) => {
+    await registrationTrigger(form)
+    router.push("/home")
+  }, [router, registrationTrigger])
 
   const onSubmit = formMethod.handleSubmit(registration);
 
   return {
     onSubmit,
-    t,
     isLoading,
     formMethod,
   };

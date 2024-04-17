@@ -25,6 +25,13 @@ export const userAPI = createApi({
         body,
       }),
     }),
+    logout: build.mutation<null, UserLogin>({
+      query: (body) => ({
+        url: "/logout",
+        method: AxiosMethod.POST,
+        body,
+      }),
+    }),
   }),
 });
 

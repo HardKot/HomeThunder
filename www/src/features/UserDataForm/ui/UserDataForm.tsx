@@ -1,3 +1,4 @@
+'use client'
 import { useUserDataForm } from "../lib/useUserDataForm";
 import { Controller } from "react-hook-form";
 import {

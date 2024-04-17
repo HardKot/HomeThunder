@@ -1,10 +1,11 @@
+'use client'
 import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
 import { FormProvider } from "react-hook-form";
 import { useLogin } from "../libs/useLogin";
 import { LoginByEmail } from "@/features/Login/LoginByEmail";
 
 export const Login = () => {
-  const { t, onSubmit, formMethod } = useLogin();
+  const {  onSubmit, formMethod } = useLogin();
   return (
     <Box
       sx={{
@@ -17,7 +18,7 @@ export const Login = () => {
     >
       <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
       <Typography component="h1" variant="h5">
-        {t("Вход")}
+        Вход
       </Typography>
       <Grid component={"form"} noValidate onSubmit={onSubmit}>
         <Grid container>
@@ -31,7 +32,7 @@ export const Login = () => {
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
         >
-          {t("Войти")}
+          Войти
         </Button>
       </Grid>
     </Box>

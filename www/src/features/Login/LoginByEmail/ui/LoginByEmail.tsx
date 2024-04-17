@@ -5,7 +5,7 @@ import { useLoginByEmail } from "@/features/Login/LoginByEmail/libs/useLoginByEm
 export interface LoginProps {}
 
 export const LoginByEmail = ({}: LoginProps) => {
-  const { t, control } = useLoginByEmail();
+  const {  control } = useLoginByEmail();
 
   return (
     <>
@@ -20,7 +20,7 @@ export const LoginByEmail = ({}: LoginProps) => {
             required
             fullWidth
             id="email"
-            label={t("Эл.почта")}
+            label={"Эл.почта"}
             autoComplete="email"
             autoFocus
           />
@@ -38,7 +38,7 @@ export const LoginByEmail = ({}: LoginProps) => {
             fullWidth
             id="password"
             type={"password"}
-            label={t("Пароль")}
+            label={"Пароль"}
             autoComplete="password"
             autoFocus
           />
@@ -51,7 +51,7 @@ export const LoginByEmail = ({}: LoginProps) => {
         render={({ field }) => (
           <FormControlLabel
             control={<Checkbox {...field} color="primary" />}
-            label={t("Запомнить меня")}
+            label={"Запомнить меня"}
           />
         )}
       />

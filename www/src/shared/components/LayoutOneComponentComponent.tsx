@@ -1,3 +1,5 @@
+'use client'
+
 import { PropsWithChildren } from "react";
 import { Paper, Grid, CssBaseline } from "@mui/material";
 

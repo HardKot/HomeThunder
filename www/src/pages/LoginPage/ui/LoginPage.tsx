@@ -4,7 +4,7 @@ import { Login } from "@/widgets/Login/ui/Login";
 import { useLoginPage } from "../libs/useLoginPage";
 
 export const LoginPage = () => {
-  const { t } = useLoginPage();
+  const {  } = useLoginPage();
 
   return (
     <LayoutOneComponentComponent>
@@ -12,12 +12,12 @@ export const LoginPage = () => {
       <Grid container>
         <Grid item xs>
           <Link href="#" variant="body2">
-            {t("Восстановить пароль")}
+            Восстановить пароль
           </Link>
         </Grid>
         <Grid item>
           <Link href="/registration" variant="body2">
-            {t("Зарегистрироваться")}
+            Зарегистрироваться
           </Link>
         </Grid>
       </Grid>

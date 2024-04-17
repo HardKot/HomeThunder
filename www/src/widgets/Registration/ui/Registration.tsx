@@ -1,3 +1,5 @@
+'use client'
+
 import { useRegistration } from "@/widgets/Registration/libs/useRegistration";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -8,7 +10,7 @@ import { RegistrationByEmail } from "@/features/Registration/RegistrationByEmail
 import { FormProvider } from "react-hook-form";
 
 export const Registration = () => {
-  const { t, onSubmit, formMethod } = useRegistration();
+  const { onSubmit, formMethod } = useRegistration();
 
   return (
     <Box
@@ -21,7 +23,7 @@ export const Registration = () => {
       }}
     >
       <Typography component="h1" variant="h5">
-        {t("Регистрация")}
+        Регистрация
       </Typography>
       <Grid component={"form"} noValidate onSubmit={onSubmit}>
         <Grid container>
@@ -36,7 +38,7 @@ export const Registration = () => {
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
         >
-          {t("Зарегистрироваться")}
+          Зарегистрироваться
         </Button>
       </Grid>
     </Box>

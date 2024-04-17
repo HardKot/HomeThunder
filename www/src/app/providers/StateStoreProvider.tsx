@@ -1,19 +1,15 @@
-import { PropsWithChildren } from "react";
+"use client"
+import {PropsWithChildren, useRef} from "react";
 import { Provider } from "react-redux";
-import { reduxWrapper } from "@/app/reduxStore";
-import type { AppProps } from "next/app";
-import { AppCacheProvider } from "@mui/material-nextjs/v13-pagesRouter";
+import {AppStore, makeStore } from "@/app/reduxStore";
 
-export const StateStoreProvider = ({
-  children,
-  Component,
-  ...rest
-}: PropsWithChildren & AppProps) => {
-  const { store, props } = reduxWrapper.useWrappedStore(rest);
+export const StateStoreProvider = ({children}: PropsWithChildren) => {
+  const storeRef = useRef<AppStore>()
+  if (!storeRef.current) {
+    storeRef.current = makeStore()
+  }
 
   return (
-    <AppCacheProvider {...props}>
-      <Provider store={store}>{children}</Provider>
-    </AppCacheProvider>
+      <Provider store={storeRef.current}>{children}</Provider>
   );
 };

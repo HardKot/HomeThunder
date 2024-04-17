@@ -1,3 +1,9 @@
+import {LayoutAppComponent} from "@/shared/components/LayoutAppComponent";
+
 export const HomePage = () => {
-  return <></>;
+    return (
+      <LayoutAppComponent>
+
+      </LayoutAppComponent>
+    );
 };

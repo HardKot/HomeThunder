@@ -4,14 +4,14 @@ import { LayoutOneComponentComponent } from "@/shared/components/LayoutOneCompon
 import { useRegistrationPage } from "../libs/useRegistrationPage";
 
 export const RegistrationPage = () => {
-  const { t } = useRegistrationPage();
+  const { } = useRegistrationPage();
 
   return (
     <LayoutOneComponentComponent>
       <Registration />
       <Grid container>
         <Grid item>
-          <Link href="/login">{t("Войти")}</Link>
+          <Link href="/login">Войти</Link>
         </Grid>
       </Grid>
     </LayoutOneComponentComponent>
