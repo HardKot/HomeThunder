@@ -28,39 +28,41 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String token = null;
-        Cookie[] cookies = request.getCookies();
+        String header = request.getHeader("Authorization");
 
-        if (cookies == null) cookies = new Cookie[0];
+        String token = parsingHeader(header);
 
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("Authorization")) {
-                token = cookie.getValue();
-                break;
-            }
+        if (token == null || !jwtService.isTokenValid(token)) {
+            filterChain.doFilter(request, response);
+            return;
         }
 
-        if (token != null && jwtService.isTokenValid(token)) {
-            if (jwtService.isTokenExpired(token)) {
-                token = jwtService.regenerateToken(userDetailsServiceImpl.loadUserByUsername(jwtService.extractEmail(token)), token, request.getHeader("user-agent"));
-                response.addCookie(CookieLibs.setCookieAuth(token, jwtService.extractRememberMe(token)));
-            }
-
-            String email = jwtService.extractEmail(token);
-            List<SimpleGrantedAuthority> grantedAuthorityList = List.of();
-            for (String rule: jwtService.extractRule(token)) {
-                grantedAuthorityList.add(new SimpleGrantedAuthority(rule));
-            }
-
-            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                    email,
-                    null,
-                    grantedAuthorityList
-            );
-
-            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+        if (jwtService.isTokenExpired(token)) {
+            response.sendRedirect("/refresh");
+            return;
         }
+
+
+        String email = jwtService.extractEmail(token);
+        List<SimpleGrantedAuthority> grantedAuthorityList = List.of();
+        for (String rule: jwtService.extractRule(token)) {
+            grantedAuthorityList.add(new SimpleGrantedAuthority(rule));
+        }
+
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                email,
+                null,
+                grantedAuthorityList
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+
 
         filterChain.doFilter(request, response);
+    }
+
+    private String parsingHeader(String header) {
+        if (header == null) return null;
+        return header.split(" ")[1];
     }
 }
