@@ -8,7 +8,6 @@ import {useCallback} from "react";
 
 export const useLogin = () => {
   const formMethod = useForm<UserLogin>();
-  const [loginTrigger, {  }] = useLoginMutation();
   const router = useRouter();
 
   const login = useCallback(async (form: UserLogin) => {
@@ -17,6 +16,8 @@ export const useLogin = () => {
   }, [router, loginTrigger])
 
   const onSubmit = formMethod.handleSubmit(login);
+
+
 
   return {
     formMethod,
