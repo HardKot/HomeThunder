@@ -1,8 +1,8 @@
-import { useForm } from "react-hook-form";
+import {useForm, useFormContext} from "react-hook-form";
 
 export const useLoginByEmail = () => {
-  const { control } = useForm();
-  
+  const { control } = useFormContext();
+
   return {
     control,
   };

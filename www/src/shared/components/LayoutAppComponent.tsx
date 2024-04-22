@@ -1,17 +1,15 @@
 import Grid2 from "@mui/material/Unstable_Grid2";
 import {PropsWithChildren, ReactNode} from "react";
+import {Box} from "@mui/material";
 
 interface LayoutAppComponentProps extends PropsWithChildren{
   header: ReactNode;
-  menu: ReactNode;
   footer?: ReactNode;
 }
 
-export const LayoutAppComponent = ({ children, header, footer, menu }: LayoutAppComponentProps) => (
-  <Grid2 container>
-    <Grid2>
-      {header}
-    </Grid2>
+export const LayoutAppComponent = ({ children, header, footer }: LayoutAppComponentProps) => (
+  <Box>
+    {header}
     <Grid2>
       {children}
     </Grid2>
@@ -21,5 +19,5 @@ export const LayoutAppComponent = ({ children, header, footer, menu }: LayoutApp
           {footer}
         </Grid2>
     }
-  </Grid2>
+  </Box>
 )

@@ -21,10 +21,11 @@ export const Login = () => {
         Вход
       </Typography>
       <Grid component={"form"} noValidate onSubmit={onSubmit}>
+        <FormProvider {...formMethod}>
         <Grid container>
-          <FormProvider {...formMethod}>
+
             <LoginByEmail />
-          </FormProvider>
+
         </Grid>
         <Button
           type="submit"
@@ -34,6 +35,7 @@ export const Login = () => {
         >
           Войти
         </Button>
+        </FormProvider>
       </Grid>
     </Box>
   );

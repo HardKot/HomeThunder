@@ -7,13 +7,7 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
-  redirects: async () => ([
-    {
-      source: '/home',
-      destination: '/',
-      permanent: true,
-    }
-  ])
+
 };
 
 export default nextConfig;

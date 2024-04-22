@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { AxiosMethod } from "@/shared/api/axiosBaseQuery";
 import { RegistrationForm } from "@/entities/user/models/RegistrationForm";
 import { UserEntity } from "@/entities/user/models/UserEntity";
 import { UserLogin } from "@/entities/user/models/UserLogin";
@@ -11,7 +10,7 @@ export const userAPI = createApi({
     registration: build.mutation<UserEntity, RegistrationForm>({
       query: (body) => ({
         url: "/registration",
-        method: AxiosMethod.POST,
+        // method: AxiosMethod.POST,
         body: {
           ...body,
           birthday: body.birthday.format("YYYY-MM-DD"),
@@ -21,14 +20,14 @@ export const userAPI = createApi({
     login: build.mutation<UserEntity, UserLogin>({
       query: (body) => ({
         url: "/login",
-        method: AxiosMethod.POST,
+        // method: AxiosMethod.POST,
         body,
       }),
     }),
     logout: build.mutation<null, UserLogin>({
       query: (body) => ({
         url: "/logout",
-        method: AxiosMethod.POST,
+        // method: AxiosMethod.POST,
         body,
       }),
     }),

@@ -1,12 +1,10 @@
-'use server'
-
-import {redirect} from "next/navigation";
-import {WebApi} from "@/shared/api/WebApi";
 import {AuthManager} from "@/shared/api/AuthManager";
+import {WebApi} from "@/shared/api/WebApi";
+import {redirect} from "next/navigation";
 
-export const loginByEmail = async (formBody: string, rememberMe = false) => {
+export const submitUserDataa = async (formBody: string) => {
   const authManager = AuthManager.build();
-  const response = await WebApi.client.post("/login", formBody);
+  const response = await WebApi.client.put("/self", formBody);
 
   if (!response.ok) {
     return response.status;

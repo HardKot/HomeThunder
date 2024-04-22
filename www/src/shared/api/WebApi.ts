@@ -1,5 +1,5 @@
-import {cookies} from "next/headers";
 import {AuthManager} from "@/shared/api/AuthManager";
+import {headers} from "next/headers";
 
 export class WebApi {
 
@@ -10,7 +10,7 @@ export class WebApi {
     this.baseUrl = new URL(host)
   }
 
-  public get = async (endpoint: string, params?: {[key: string]: string}) => {
+  public get = (endpoint: string, params?: {[key: string]: string}) => {
     const url = new URL(endpoint, this.baseUrl)
     if (params) {
       for (const param in params) {
@@ -21,18 +21,19 @@ export class WebApi {
     return this.request(url, "GET");
   }
 
-  public post = async (endpoint: string, body: any) => this.request(new URL(endpoint, this.baseUrl), "POST", body);
+  public post = (endpoint: string, body: any) => this.request(new URL(endpoint, this.baseUrl), "POST", body);
 
-  public put = async (endpoint: string, body: any) => this.request(new URL(endpoint, this.baseUrl), "PUT", body);
+  public put = (endpoint: string, body: any) => this.request(new URL(endpoint, this.baseUrl), "PUT", body);
 
 
-  private request = (url: URL, method: string, body?: any) => fetch(url, {
+  private request = (url: URL, method: string, body?: string) => fetch(url, {
     method,
     headers: {
       ...this.authorizationHeader(),
+      ...this.userAgentHeader(),
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(body)
+    body
   })
 
   private authorizationHeader = (): {} | { Authorization: string } => {
@@ -40,6 +41,10 @@ export class WebApi {
     if (!token) return {};
     return { Authorization: `Bearer ${token}` }
   }
+
+  private userAgentHeader = (): { "User-Agent"?: string } => ({
+    "User-Agent":  headers().get("User-Agent") ?? undefined
+  })
 
 
   static client = new WebApi(process.env.APP_HOST ?? "http://localhost:8080")

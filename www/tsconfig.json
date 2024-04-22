@@ -14,6 +14,7 @@
     "incremental": true,
     "paths": {
       "@/*": ["./src/*"],
+      "@/app/*": ["./src/_app/*"],
       "@/styles/*": ["./styles/*"]
     },
     "plugins": [

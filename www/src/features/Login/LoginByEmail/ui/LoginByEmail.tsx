@@ -13,9 +13,11 @@ export const LoginByEmail = ({}: LoginProps) => {
         name={"email"}
         control={control}
         rules={{ required: true }}
-        render={({ field }) => (
+        render={({ field, fieldState,  }) => (
           <TextField
             {...field}
+            error={!!fieldState.error?.message}
+            helperText={fieldState.error?.message}
             margin="normal"
             required
             fullWidth
@@ -30,9 +32,10 @@ export const LoginByEmail = ({}: LoginProps) => {
         name={"password"}
         control={control}
         rules={{ required: true }}
-        render={({ field }) => (
+        render={({ field, fieldState }) => (
           <TextField
             {...field}
+            error={!!fieldState.error?.message}
             margin="normal"
             required
             fullWidth
@@ -47,7 +50,6 @@ export const LoginByEmail = ({}: LoginProps) => {
       <Controller
         name={"rememberMe"}
         control={control}
-        rules={{ required: true }}
         render={({ field }) => (
           <FormControlLabel
             control={<Checkbox {...field} color="primary" />}

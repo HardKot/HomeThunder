@@ -2,20 +2,18 @@ import {NextRequest, NextResponse} from "next/server";
 import {AuthManager} from "@/shared/api/AuthManager";
 import {RuleRouting} from "@/app/RuleRouting";
 
+const publicRoutes = ['/login', '/registration']
+
+
 export const authenticationMiddleware = (request: NextRequest) => {
   const authManager = AuthManager.build();
   const token = authManager.getToken()
-  if (!token && (
-    !request.nextUrl.pathname.startsWith("/registration") ||
-    !request.nextUrl.pathname.startsWith("/login") ||
-    !request.nextUrl.pathname.startsWith("/login")
-  )) return NextResponse.redirect("/login");
+  if (!token && !publicRoutes.find(publicRoute => request.nextUrl.pathname.startsWith(publicRoute)))
+    return NextResponse.redirect(new URL("/login", request.url));
 
 
-  if (request.nextUrl.pathname.startsWith("/registration") ||
-    request.nextUrl.pathname.startsWith("/login") ||
-    request.nextUrl.pathname.startsWith("/login")
-  ) return NextResponse.redirect("/")
+  if (publicRoutes.find(publicRoute => request.nextUrl.pathname.startsWith(publicRoute)))
+    return NextResponse.redirect( new URL("/", request.url))
 
   const rules = RuleRouting(request.nextUrl.pathname);
 
@@ -25,5 +23,5 @@ export const authenticationMiddleware = (request: NextRequest) => {
     if (authManager.hasAccess(rule)) return NextResponse.next();
   }
 
-  return NextResponse.redirect(request.headers.get("referer") ?? "/")
+  return NextResponse.redirect(new URL(request.headers.get("referer") ?? "/", request.url))
 }
