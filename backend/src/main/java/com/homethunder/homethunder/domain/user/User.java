@@ -30,6 +30,16 @@ public class User extends BaseEntity {
         return Role.Visitor;
     }
 
+    public Set<Rule> getActiveRule() {
+        Set<Rule> ruleSet = getRole().getRules();
+
+        for (RuleDetail rule: ruleDetailSet) {
+            if (rule.isActive()) ruleSet.add(rule.rule);
+        }
+
+        return ruleSet;
+    }
+
     @Data
     public static class RuleDetail {
         private Rule rule;

@@ -2,7 +2,7 @@ package com.homethunder.homethunder.domain.user;
 
 import java.util.Optional;
 
-public interface RoleGateway {
+public interface IRoleGateway {
 
     Role create(Role role);
 

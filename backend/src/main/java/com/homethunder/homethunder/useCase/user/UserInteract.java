@@ -11,6 +11,7 @@ import lombok.Setter;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 
 public class UserInteract {
@@ -29,12 +30,15 @@ public class UserInteract {
 
         if (dto.gender() != null) user.setGender(dto.gender());
         user.setBirthday(dto.birthday());
-
         user.setPassword(userGateway.passwordEncoder(dto.password()));
-
         user.setEmail(dto.email());
 
-        return Results.success(userGateway.create(user));
+        userGateway.create(user);
+
+        String token = userGateway.generateTokenForEmail(user,"registration");
+        userGateway.sendEmail(user, token);
+
+        return Results.success(user);
     }
 
     public Result<User, UserInteractError> update(User user, IUserUpdate dto) {
@@ -45,7 +49,6 @@ public class UserInteract {
 
         if (dto.gender() != null) user.setGender(dto.gender());
         user.setBirthday(dto.birthday());
-        user.setEmail(dto.email());
 
         user.setDeletedAt(null);
 
@@ -70,6 +73,27 @@ public class UserInteract {
         user.setDeletedAt(null);
 
         return Results.success(userGateway.update(user));
+    }
+
+    public Result<User, UserInteractError> requestChangeEmail(User user, String email) {
+        Optional<User> emailCheck = userGateway.findByEmail(email);
+        if (emailCheck.isPresent() && !emailCheck.get().equals(user)) return Results.failure(new UserInteractError.EmailExists());
+
+        user.setEmail(email);
+        String token = userGateway.generateTokenForEmail(user, "changeEmail");
+        userGateway.sendEmail(user, token);
+
+        return Results.success(user);
+    }
+
+    public void requestDropPassword(String email) {
+        Optional<User> requestUser = userGateway.findByEmail(email);
+        if (requestUser.isEmpty()) return;
+
+        String token = userGateway.generateTokenForEmail(requestUser.get(), "dropPassword");
+        userGateway.sendEmail(requestUser.get(), token);
+
+
     }
 
 }

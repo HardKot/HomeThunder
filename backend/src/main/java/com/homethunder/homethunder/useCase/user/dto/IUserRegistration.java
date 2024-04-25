@@ -17,4 +17,7 @@ public interface IUserRegistration {
     String email();
     String password();
     String confirmPassword();
+
+    String ip();
+    String deviceName();
 }
