@@ -27,6 +27,11 @@ public class UserGateway implements IUserGateway {
     }
 
     @Override
+    public String generateTokenForEmail(User user, String metaName) {
+        return "";
+    }
+
+    @Override
     public User create(User user) {
         return this.userRepository.save(new UserSchema(user)).toUser();
     }

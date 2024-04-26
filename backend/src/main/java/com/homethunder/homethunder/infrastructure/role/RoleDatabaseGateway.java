@@ -2,18 +2,15 @@ package com.homethunder.homethunder.infrastructure.role;
 
 
 import com.homethunder.homethunder.domain.user.Role;
-import com.homethunder.homethunder.domain.user.RoleGateway;
-import com.homethunder.homethunder.domain.user.User;
+import com.homethunder.homethunder.domain.user.IRoleGateway;
 import com.homethunder.homethunder.infrastructure.db.repository.RoleRepository;
-import com.homethunder.homethunder.infrastructure.db.repository.UserRepository;
 import com.homethunder.homethunder.infrastructure.db.schema.RoleSchema;
-import com.homethunder.homethunder.infrastructure.db.schema.UserSchema;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 
-public class RoleDatabaseGateway implements RoleGateway {
+public class RoleDatabaseGateway implements IRoleGateway {
     private final RoleRepository roleRepository;
 
     public RoleDatabaseGateway(RoleRepository roleRepository) {

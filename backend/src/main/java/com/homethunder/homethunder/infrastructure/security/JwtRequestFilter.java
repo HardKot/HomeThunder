@@ -1,10 +1,8 @@
 package com.homethunder.homethunder.infrastructure.security;
 
-import com.homethunder.homethunder.infrastructure.db.repository.JwtRepository;
-import com.homethunder.homethunder.infrastructure.libs.CookieLibs;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

@@ -7,6 +7,7 @@ import org.mockito.MockedStatic;
 
 
 import java.time.*;
+import java.util.Set;
 
 import static org.mockito.Mockito.mockStatic;
 
@@ -23,6 +24,7 @@ class TokenTest {
                 null,
                 "test junit",
                 "127.0.0.1",
+                Set.of(),
                 LocalDateTime.of(2024, Month.APRIL, 15, 0, 39)
         );
 
@@ -40,6 +42,7 @@ class TokenTest {
                 null,
                 "test junit",
                 "127.0.0.1",
+                Set.of(),
                 LocalDateTime.of(2024, Month.MARCH, 1, 0, 39)
         );
 

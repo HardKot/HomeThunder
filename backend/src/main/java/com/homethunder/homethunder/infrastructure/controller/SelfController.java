@@ -1,7 +1,6 @@
-package com.homethunder.homethunder.infrastructure.user;
+package com.homethunder.homethunder.infrastructure.controller;
 
 import com.homethunder.homethunder.domain.user.User;
-import com.homethunder.homethunder.infrastructure.db.repository.UserRepository;
 import com.homethunder.homethunder.infrastructure.db.schema.UserSchema;
 
 import com.homethunder.homethunder.infrastructure.security.AuthenticationFacade;

@@ -38,7 +38,15 @@ public record RegistrationForm(
         @NotEmpty
         @Size(min = 8, max = 100)
         @Pattern(regexp = "^[a-zA-Z\\d%*()?@#$~{}]+$")
-        String confirmPassword
+        String confirmPassword,
+
+        @NotEmpty
+        @Pattern(regexp = "\\d{1,3}.\\d{1,3}.\\d{1,3}")
+        String ip,
+
+        @NotEmpty
+        @Pattern(regexp = "\\d{1,3}.\\d{1,3}.\\d{1,3}")
+        String deviceName
 ) implements IUserRegistration {
 
 }
