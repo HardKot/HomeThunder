@@ -42,12 +42,11 @@ public class UserInteract {
     }
 
     public Result<User, UserInteractError> update(User user, IUserUpdate dto) {
-        if (userGateway.findByEmail(dto.email()).isPresent() && !user.equals(userGateway.findByEmail(dto.email()).get())) return Results.failure(new UserInteractError.EmailExists());
         user.setFirstname(dto.firstname());
         user.setLastname(dto.lastname());
         user.setPatronymic(dto.patronymic());
 
-        if (dto.gender() != null) user.setGender(dto.gender());
+        user.setGender(dto.gender());
         user.setBirthday(dto.birthday());
 
         user.setDeletedAt(null);
@@ -85,7 +84,7 @@ public class UserInteract {
 
         return Results.success(user);
     }
-    
+
     public void requestDropPassword(String email) {
         Optional<User> requestUser = userGateway.findByEmail(email);
         if (requestUser.isEmpty()) return;

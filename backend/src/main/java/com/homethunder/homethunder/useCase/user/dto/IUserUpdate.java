@@ -13,6 +13,4 @@ public interface IUserUpdate {
     String avatarURI();
     Gender gender();
     LocalDate birthday();
-
-    String email();
 }
