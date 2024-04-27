@@ -44,4 +44,8 @@ public class SecurityInteract {
 
         return Results.success(securityGateway.generateJWT(token));
     }
+
+    public void logout(Token token) {
+
+    }
 }
