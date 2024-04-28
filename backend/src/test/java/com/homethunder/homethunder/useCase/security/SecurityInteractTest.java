@@ -72,7 +72,7 @@ class SecurityInteractTest {
     @Test
     @Tag("refreshingToken")
     void refreshingOldTokenTest() {
-        testToken.setCreateAt(LocalDateTime.of(2024, Month.MAY, 5, 1, 0));
+        testToken.setCreateAt(LocalDateTime.of(2024, Month.APRIL, 1, 1, 0));
         try (MockedStatic<LocalDateTime> mockedStatic = mockStatic(LocalDateTime.class)) {
             mockedStatic.when(LocalDateTime::now).thenReturn(localDateTime);
             Result<String, SecurityInteractError> result = securityInteract.refreshingToken(testToken);
