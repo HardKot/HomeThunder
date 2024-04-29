@@ -1,11 +1,11 @@
 package com.homethunder.homethunder.infrastructure.security;
 
-import com.homethunder.homethunder.infrastructure.db.repository.JwtRepository;
-import com.homethunder.homethunder.infrastructure.db.schema.JwtSchema;
+import com.homethunder.homethunder.domain.security.Token;
+import com.homethunder.homethunder.domain.user.User;
+import com.homethunder.homethunder.infrastructure.db.schema.TokenSchema;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -24,43 +24,26 @@ public class JwtService {
     @Value("${jwt.lifetime}")
     private Duration jwtLifeTime;
 
-    @Autowired
-    private JwtRepository jwtRepository;
 
-    public String generateToken(UserDetailsImpl userDetails, String deviceName) {
-        JwtSchema jwtSchema = new JwtSchema();
-        jwtSchema.setId(UUID.randomUUID());
-        jwtSchema.setCreateAt(LocalDateTime.now());
-        jwtSchema.setUserId(userDetails.getId());
-        jwtSchema.setDeviceName(deviceName);
-
-        Date issuedAt = Date.from(jwtSchema.getCreateAt().atZone(ZoneOffset.systemDefault()).toInstant());
-
-        jwtRepository.save(jwtSchema);
+    public String generateToken(Token token) {
+        Date issuedAt = Date.from(token.getCreateAt().atZone(ZoneOffset.systemDefault()).toInstant());
 
         return Jwts.builder()
-                .id(jwtSchema.getId().toString())
-                .subject(userDetails.getEmail())
-                .claim("rules", userDetails.getAuthorities())
-                .claim("uid", userDetails.getId())
+                .id(token.getId().toString())
+                .subject(token.getUid().toString())
+                .claim("rules", token.getRuleSet())
+                .claim("uid", token.getUid().toString())
                 .issuedAt(issuedAt)
                 .expiration(new Date(issuedAt.getTime() + jwtLifeTime.toMillis()))
                 .signWith(getSecretKey())
                 .compact();
     }
 
-    public boolean isTokenValid(String token){
-        return jwtRepository.findById(extractTokenID(token)).isPresent();
-    }
+
 
     public String extractEmail(String token) {
         Claims claims = extractAllClaims(token);
         return claims.getSubject();
-    }
-
-    public String regenerateToken(UserDetailsImpl userDetails, String token, String deviceName) {
-        jwtRepository.deleteById(extractTokenID(token));
-        return generateToken(userDetails, deviceName);
     }
 
     public UUID extractUID(String token) {

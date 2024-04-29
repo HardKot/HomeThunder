@@ -3,17 +3,16 @@ package com.homethunder.homethunder.domain.security;
 import com.homethunder.homethunder.domain.Rule;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
-
-@AllArgsConstructor
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Token {
-    public Token() {}
-
     private UUID id = UUID.randomUUID();
 
     private UUID uid;
