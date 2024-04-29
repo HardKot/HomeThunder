@@ -5,6 +5,6 @@ public sealed class SecurityInteractError {
     public static final class EmailAndPasswordNoMatch extends SecurityInteractError {}
     public static final class TokenNotExists extends  SecurityInteractError {}
     public static final class UserNotExists extends SecurityInteractError {}
-
+    public static final class ErrorAuthWithJWT extends SecurityInteractError {}
 }
 

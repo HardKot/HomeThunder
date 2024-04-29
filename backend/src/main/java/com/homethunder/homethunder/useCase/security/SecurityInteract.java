@@ -50,12 +50,13 @@ public class SecurityInteract {
         securityGateway.deleteToken(token);
     }
 
-    public Result<User, SecurityInteractError> getUserByJWT(String jwt) {
+    public Result<User, SecurityInteractError> authenticationByJWT(String jwt) {
         UUID id = securityGateway.extractTokenID(jwt);
         Optional<Token> tokenSearch = securityGateway.findTokenById(id);
         if (tokenSearch.isEmpty()) return Results.failure(new SecurityInteractError.TokenNotExists());
         Optional<User> userSearch = securityGateway.findUserByUID(tokenSearch.get().getUid());
         if (userSearch.isEmpty()) return Results.failure(new SecurityInteractError.UserNotExists());
+        if (!securityGateway.authenticateInManager(userSearch.get())) return Results.failure(new SecurityInteractError.ErrorAuthWithJWT());
         return Results.success(userSearch.get());
     }
 }

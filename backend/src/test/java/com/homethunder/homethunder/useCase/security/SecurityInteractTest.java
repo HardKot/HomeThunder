@@ -10,16 +10,15 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import java.time.*;
 import java.util.Optional;
-import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mockStatic;
 
 class SecurityInteractTest {
@@ -44,7 +43,7 @@ class SecurityInteractTest {
         Mockito.when(securityGateway.generateJWT(Mockito.any(Token.class))).thenReturn(jwtExempla);
         Mockito.when(securityGateway.saveToken(Mockito.any(Token.class))).thenAnswer(i -> i.getArguments()[0]);
         Mockito.when(securityGateway.authenticateInManager(Mockito.any(User.class), Mockito.anyString())).thenReturn(true);
-
+        Mockito.when(securityGateway.authenticateInManager(Mockito.any(User.class))).thenReturn(true);
 
         securityInteract.setSecurityGateway(securityGateway);
     }
@@ -155,11 +154,12 @@ class SecurityInteractTest {
         Mockito.when(securityGateway.findTokenById(tokenID)).thenReturn(Optional.of(testToken));
         Mockito.when(securityGateway.findUserByUID(uid)).thenReturn(Optional.of(testUser));
 
-        Result<User, SecurityInteractError> result = securityInteract.getUserByJWT(jwtExempla);
+        Result<User, SecurityInteractError> result = securityInteract.authenticationByJWT(jwtExempla);
 
         Assertions.assertTrue(result.hasSuccess());
         Assertions.assertTrue(result.getSuccess().isPresent());
         Assertions.assertEquals(testUser, result.getSuccess().get());
+        Mockito.verify(securityGateway, Mockito.times(1)).authenticateInManager(testUser);
     }
 
     @Test
@@ -169,11 +169,12 @@ class SecurityInteractTest {
         Mockito.when(securityGateway.extractTokenID(jwtExempla)).thenReturn(tokenID);
         Mockito.when(securityGateway.findTokenById(tokenID)).thenReturn(Optional.empty());
 
-        Result<User, SecurityInteractError> result = securityInteract.getUserByJWT(jwtExempla);
+        Result<User, SecurityInteractError> result = securityInteract.authenticationByJWT(jwtExempla);
 
         Assertions.assertTrue(result.hasFailure());
         Assertions.assertTrue(result.getFailure().isPresent());
         Assertions.assertInstanceOf(SecurityInteractError.TokenNotExists.class, result.getFailure().get());
+        Mockito.verify(securityGateway, Mockito.times(0)).authenticateInManager(Mockito.any(User.class));
     }
 
     @Test
@@ -186,12 +187,12 @@ class SecurityInteractTest {
         Mockito.when(securityGateway.findTokenById(tokenID)).thenReturn(Optional.of(testToken));
         Mockito.when(securityGateway.findUserByUID(uid)).thenReturn(Optional.empty());
 
-        var result = securityInteract.getUserByJWT(jwtExempla);
+        var result = securityInteract.authenticationByJWT(jwtExempla);
 
         Assertions.assertTrue(result.hasFailure());
         Assertions.assertTrue(result.getFailure().isPresent());
         Assertions.assertInstanceOf(SecurityInteractError.UserNotExists.class, result.getFailure().get());
-
+        Mockito.verify(securityGateway, Mockito.times(0)).authenticateInManager(Mockito.any(User.class));
     }
 
 

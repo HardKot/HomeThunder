@@ -14,4 +14,5 @@ public interface ISecurityGateway {
     UUID extractTokenID(String token);
     Optional<Token> findTokenById(UUID id);
     Optional<User> findUserByUID(UUID id);
+    boolean authenticateInManager(User user);
 }
