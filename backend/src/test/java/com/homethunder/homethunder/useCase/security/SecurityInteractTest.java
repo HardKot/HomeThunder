@@ -15,11 +15,12 @@ import org.mockito.Mockito;
 
 import java.time.*;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.reset;
 
 class SecurityInteractTest {
 
@@ -28,18 +29,20 @@ class SecurityInteractTest {
     private final SecurityInteract securityInteract = new SecurityInteract();
 
     private Token testToken;
+    private User testUser;
 
     private String jwtExempla = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
 
     private Clock clock = Clock.fixed(Instant.parse("2024-04-10T00:00:00Z"), ZoneId.of("UTC"));
     private LocalDateTime localDateTime = LocalDateTime.now(clock);
 
+
     @BeforeEach
     void generateGateway() {
         securityGateway = Mockito.mock(ISecurityGateway.class);
 
         Mockito.when(securityGateway.generateJWT(Mockito.any(Token.class))).thenReturn(jwtExempla);
-        Mockito.when(securityGateway.save(Mockito.any(Token.class))).thenAnswer(i -> i.getArguments()[0]);
+        Mockito.when(securityGateway.saveToken(Mockito.any(Token.class))).thenAnswer(i -> i.getArguments()[0]);
         Mockito.when(securityGateway.authenticateInManager(Mockito.any(User.class), Mockito.anyString())).thenReturn(true);
 
 
@@ -53,6 +56,11 @@ class SecurityInteractTest {
         testToken.setIp("127.0.0.1");
         testToken.setRuleSet(Set.of());
         testToken.setDeviceName("Junit test");
+    }
+
+    @BeforeEach
+    void generateUser() {
+        testUser = new User();
     }
 
     @Test
@@ -101,7 +109,7 @@ class SecurityInteractTest {
         roleDetail.setRole(Role.Visitor);
         user.setRoleDetail(roleDetail);
 
-        Mockito.when(securityGateway.findByEmail("email@email.ru")).thenReturn(Optional.of(user));
+        Mockito.when(securityGateway.findUserByEmail("email@email.ru")).thenReturn(Optional.of(user));
 
         Result<String, SecurityInteractError> result = securityInteract.login(dto);
 
@@ -114,7 +122,7 @@ class SecurityInteractTest {
     @Tag("login")
     void loginUserNoFoundTest() {
         ILoginDTO dto = loginDTO();
-        Mockito.when(securityGateway.findByEmail("email@email.ru")).thenReturn(Optional.empty());
+        Mockito.when(securityGateway.findUserByEmail("email@email.ru")).thenReturn(Optional.empty());
 
         Result<String, SecurityInteractError> result = securityInteract.login(dto);
 
@@ -127,7 +135,7 @@ class SecurityInteractTest {
     @Tag("login")
     void loginPassportNoMatch() {
         ILoginDTO dto = loginDTO();
-        Mockito.when(securityGateway.findByEmail("email@email.ru")).thenReturn(Optional.of(new User()));
+        Mockito.when(securityGateway.findUserByEmail("email@email.ru")).thenReturn(Optional.of(new User()));
         Mockito.when(securityGateway.authenticateInManager(Mockito.any(User.class), Mockito.anyString())).thenReturn(false);
 
         Result<String, SecurityInteractError> result = securityInteract.login(dto);
@@ -135,6 +143,55 @@ class SecurityInteractTest {
         Assertions.assertTrue(result.hasFailure());
         Assertions.assertTrue(result.getFailure().isPresent());
         Assertions.assertInstanceOf(SecurityInteractError.EmailAndPasswordNoMatch.class, result.getFailure().get());
+    }
+
+    @Test
+    @Tag("getUserByJWT")
+    void getUserByJWTSuccess() {
+        UUID tokenID = UUID.randomUUID();
+        UUID uid = testToken.getUid();
+
+        Mockito.when(securityGateway.extractTokenID(jwtExempla)).thenReturn(tokenID);
+        Mockito.when(securityGateway.findTokenById(tokenID)).thenReturn(Optional.of(testToken));
+        Mockito.when(securityGateway.findUserByUID(uid)).thenReturn(Optional.of(testUser));
+
+        Result<User, SecurityInteractError> result = securityInteract.getUserByJWT(jwtExempla);
+
+        Assertions.assertTrue(result.hasSuccess());
+        Assertions.assertTrue(result.getSuccess().isPresent());
+        Assertions.assertEquals(testUser, result.getSuccess().get());
+    }
+
+    @Test
+    @Tag("getUserByJWT")
+    void getUserByJWTNoFoundToken() {
+        UUID tokenID = UUID.randomUUID();
+        Mockito.when(securityGateway.extractTokenID(jwtExempla)).thenReturn(tokenID);
+        Mockito.when(securityGateway.findTokenById(tokenID)).thenReturn(Optional.empty());
+
+        Result<User, SecurityInteractError> result = securityInteract.getUserByJWT(jwtExempla);
+
+        Assertions.assertTrue(result.hasFailure());
+        Assertions.assertTrue(result.getFailure().isPresent());
+        Assertions.assertInstanceOf(SecurityInteractError.TokenNotExists.class, result.getFailure().get());
+    }
+
+    @Test
+    @Tag("getUsersByJWT")
+    void getUserByJWTUserNoFound() {
+        UUID tokenID = UUID.randomUUID();
+        UUID uid = testToken.getUid();
+
+        Mockito.when(securityGateway.extractTokenID(jwtExempla)).thenReturn(tokenID);
+        Mockito.when(securityGateway.findTokenById(tokenID)).thenReturn(Optional.of(testToken));
+        Mockito.when(securityGateway.findUserByUID(uid)).thenReturn(Optional.empty());
+
+        var result = securityInteract.getUserByJWT(jwtExempla);
+
+        Assertions.assertTrue(result.hasFailure());
+        Assertions.assertTrue(result.getFailure().isPresent());
+        Assertions.assertInstanceOf(SecurityInteractError.UserNotExists.class, result.getFailure().get());
+
     }
 
 
