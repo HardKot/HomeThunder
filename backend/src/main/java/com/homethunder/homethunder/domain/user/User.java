@@ -41,6 +41,10 @@ public class User extends BaseEntity {
         return ruleSet;
     }
 
+    public boolean hasAccess(Rule rule) {
+        return getActiveRule().contains(rule);
+    }
+
     @Data
     public static class RuleDetail {
         private Rule rule;

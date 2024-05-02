@@ -1,6 +1,7 @@
 package com.homethunder.homethunder.domain.post;
 
 import com.homethunder.homethunder.domain.BaseEntity;
+import com.homethunder.homethunder.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,6 +23,6 @@ public class Post extends BaseEntity {
 
     private LocalDateTime dateTimePublish;
 
-    private Author author;
+    private User author;
     private PostCategory category;
 }
