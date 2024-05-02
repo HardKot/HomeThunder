@@ -6,5 +6,6 @@ public sealed class SecurityInteractError {
     public static final class TokenNotExists extends  SecurityInteractError {}
     public static final class UserNotExists extends SecurityInteractError {}
     public static final class ErrorAuthWithJWT extends SecurityInteractError {}
+    public static final class JWTExpired extends SecurityInteractError {}
 }
 

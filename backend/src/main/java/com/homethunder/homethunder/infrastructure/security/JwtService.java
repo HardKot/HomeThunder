@@ -1,7 +1,6 @@
 package com.homethunder.homethunder.infrastructure.security;
 
 import com.homethunder.homethunder.domain.security.Token;
-import com.homethunder.homethunder.domain.user.User;
 import com.homethunder.homethunder.infrastructure.db.schema.TokenSchema;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;

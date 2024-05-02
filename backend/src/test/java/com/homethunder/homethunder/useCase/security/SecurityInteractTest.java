@@ -153,7 +153,7 @@ class SecurityInteractTest {
         Mockito.when(securityGateway.extractTokenID(jwtExempla)).thenReturn(tokenID);
         Mockito.when(securityGateway.findTokenById(tokenID)).thenReturn(Optional.of(testToken));
         Mockito.when(securityGateway.findUserByUID(uid)).thenReturn(Optional.of(testUser));
-
+        Mockito.when(securityGateway.jwtIsExpired(jwtExempla)).thenReturn(false);
         Result<User, SecurityInteractError> result = securityInteract.authenticationByJWT(jwtExempla);
 
         Assertions.assertTrue(result.hasSuccess());
@@ -161,6 +161,21 @@ class SecurityInteractTest {
         Assertions.assertEquals(testUser, result.getSuccess().get());
         Mockito.verify(securityGateway, Mockito.times(1)).authenticateInManager(testUser);
     }
+
+    @Test
+    @Tag("getUserByJWT")
+    void getUserByJWTIsExpired() {
+        UUID tokenID = UUID.randomUUID();
+        UUID uid = testToken.getUid();
+
+        Mockito.when(securityGateway.jwtIsExpired(jwtExempla)).thenReturn(true);
+        var result = securityInteract.authenticationByJWT(jwtExempla);
+
+        Assertions.assertTrue(result.hasFailure());
+        Assertions.assertTrue(result.getFailure().isPresent());
+        Assertions.assertInstanceOf(SecurityInteractError.JWTExpired.class, result.getFailure().get());
+    }
+
 
     @Test
     @Tag("getUserByJWT")

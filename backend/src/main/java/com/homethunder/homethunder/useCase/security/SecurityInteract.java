@@ -51,6 +51,7 @@ public class SecurityInteract {
     }
 
     public Result<User, SecurityInteractError> authenticationByJWT(String jwt) {
+        if (securityGateway.jwtIsExpired(jwt)) return Results.failure(new SecurityInteractError.JWTExpired());
         UUID id = securityGateway.extractTokenID(jwt);
         Optional<Token> tokenSearch = securityGateway.findTokenById(id);
         if (tokenSearch.isEmpty()) return Results.failure(new SecurityInteractError.TokenNotExists());

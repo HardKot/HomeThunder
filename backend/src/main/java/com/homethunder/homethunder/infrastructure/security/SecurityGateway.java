@@ -97,4 +97,9 @@ public class SecurityGateway implements ISecurityGateway {
 
         return true;
     }
+
+    @Override
+    public boolean jwtIsExpired(String token) {
+        return jwtService.isTokenExpired(token);
+    }
 }

@@ -15,4 +15,5 @@ public interface ISecurityGateway {
     Optional<Token> findTokenById(UUID id);
     Optional<User> findUserByUID(UUID id);
     boolean authenticateInManager(User user);
+    boolean jwtIsExpired(String token);
 }
