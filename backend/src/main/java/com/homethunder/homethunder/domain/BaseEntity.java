@@ -1,6 +1,6 @@
 package com.homethunder.homethunder.domain;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.annotation.Nullable;
 import java.time.LocalDateTime;

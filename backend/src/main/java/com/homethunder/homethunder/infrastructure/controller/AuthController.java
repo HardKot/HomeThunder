@@ -14,13 +14,13 @@ import com.leakyabstractions.result.api.Result;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
 import ua_parser.Client;
 import ua_parser.Parser;
 
@@ -48,8 +48,8 @@ public class AuthController {
         Parser uaParser = new Parser();
         Client client = uaParser.parse(userAgent);
 
-
-        return ResponseEntity.ok(new AuthResponse(new UserDTO(user), jwtService.generateToken(userDetails, client.toString())));
+        return null;
+//        return ResponseEntity.ok(new AuthResponse(new UserDTO(user), jwtService.generateToken(userDetails, client.toString())));
     }
 
     @PostMapping("/login")
@@ -66,7 +66,8 @@ public class AuthController {
         Client client = uaParser.parse(userAgent);
 
 
-        return ResponseEntity.ok(new AuthResponse(new UserDTO(user), jwtService.generateToken(userDetails, client.toString())));
+        return null;
+//        return ResponseEntity.ok(new AuthResponse(new UserDTO(user), jwtService.generateToken(userDetails, client.toString())));
     }
 
     @PostMapping("/refresh")
@@ -78,16 +79,18 @@ public class AuthController {
         Parser uaParser = new Parser();
         Client client = uaParser.parse(userAgent);
 
-        String token = jwtService.regenerateToken(
-            userDetailsServiceImpl.loadUserByUsername(jwtService.extractEmail(oldToken)),
-            oldToken,
-            client.toString()
-        );
-
-        User user = userRepository.findByEmail(jwtService.extractEmail(oldToken)).get().toUser();
-
-        return ResponseEntity.ok(new AuthResponse(new UserDTO(user), token));
+        return null;
+////        String token = jwtService.regenerateToken(
+////            userDetailsServiceImpl.loadUserByUsername(jwtService.extractEmail(oldToken)),
+////            oldToken,
+////            client.toString()
+////        );
+////
+////        User user = userRepository.findByEmail(jwtService.extractEmail(oldToken)).get().toUser();
+//
+//        return ResponseEntity.ok(new AuthResponse(new UserDTO(user), token));
     }
 
-    private record AuthResponse(UserDTO user, String token) {}
+    private record AuthResponse(UserDTO user, String token) {
+    }
 }

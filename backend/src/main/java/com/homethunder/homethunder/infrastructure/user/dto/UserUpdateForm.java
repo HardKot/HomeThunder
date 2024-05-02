@@ -24,7 +24,7 @@ public record UserUpdateForm(
 
         @NotNull
         @Past
-        @JsonFormat(pattern="yyyy-MM-dd")
+        @JsonFormat(pattern = "yyyy-MM-dd")
         LocalDate birthday,
 
         String avatarURI,

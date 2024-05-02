@@ -2,20 +2,16 @@ package com.homethunder.homethunder.infrastructure.controller;
 
 import com.homethunder.homethunder.domain.user.User;
 import com.homethunder.homethunder.infrastructure.db.schema.UserSchema;
-
 import com.homethunder.homethunder.infrastructure.security.AuthenticationFacade;
 import com.homethunder.homethunder.infrastructure.user.dto.UserDTO;
 import com.homethunder.homethunder.infrastructure.user.dto.UserNewPasswordForm;
 import com.homethunder.homethunder.infrastructure.user.dto.UserUpdateForm;
-
 import com.homethunder.homethunder.useCase.user.UserInteract;
 import com.homethunder.homethunder.useCase.user.UserInteractError;
 import com.leakyabstractions.result.api.Result;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.*;
 
 @RestController

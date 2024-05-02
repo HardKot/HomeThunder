@@ -4,7 +4,7 @@ package com.homethunder.homethunder.infrastructure.user.dto;
 import com.homethunder.homethunder.domain.user.User;
 import com.homethunder.homethunder.useCase.user.dto.IUserDTO;
 
-public record UserDTO (
+public record UserDTO(
         String id,
         String firstname,
         String lastname,
@@ -35,6 +35,6 @@ public record UserDTO (
                 user.getCreatedAt().toString(),
                 user.getUpdatedAt().toString(),
                 user.getDeletedAt() != null ? user.getDeletedAt().toString() : null
-                );
+        );
     }
 }

@@ -23,12 +23,13 @@ public class RoleSchema extends BaseSchema {
     @Enumerated(EnumType.STRING)
     private Set<Rule> ruleDetailSet = Set.of();
 
-    public RoleSchema() {}
+    public RoleSchema() {
+    }
 
     public RoleSchema(Role entity) {
         useBaseEntity(entity);
 
-        name  = entity.getName();
+        name = entity.getName();
         image = entity.getImage();
 
         ruleDetailSet = entity.getRules();

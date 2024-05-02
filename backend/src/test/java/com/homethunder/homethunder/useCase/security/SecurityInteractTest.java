@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
@@ -23,17 +22,15 @@ import static org.mockito.Mockito.mockStatic;
 
 class SecurityInteractTest {
 
-    private ISecurityGateway securityGateway;
-
     private final SecurityInteract securityInteract = new SecurityInteract();
-
+    private ISecurityGateway securityGateway;
     private Token testToken;
     private User testUser;
 
-    private String jwtExempla = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+    private final String jwtExempla = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
 
-    private Clock clock = Clock.fixed(Instant.parse("2024-04-10T00:00:00Z"), ZoneId.of("UTC"));
-    private LocalDateTime localDateTime = LocalDateTime.now(clock);
+    private final Clock clock = Clock.fixed(Instant.parse("2024-04-10T00:00:00Z"), ZoneId.of("UTC"));
+    private final LocalDateTime localDateTime = LocalDateTime.now(clock);
 
 
     @BeforeEach

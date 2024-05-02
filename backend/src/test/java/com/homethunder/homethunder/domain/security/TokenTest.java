@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
-
 import java.time.*;
 import java.util.Set;
 
@@ -13,8 +12,8 @@ import static org.mockito.Mockito.mockStatic;
 
 
 class TokenTest {
-    private Clock clock = Clock.fixed(Instant.parse("2024-04-12T00:00:00Z"), ZoneId.of("UTC"));
-    private LocalDateTime localDateTime = LocalDateTime.now(clock);
+    private final Clock clock = Clock.fixed(Instant.parse("2024-04-12T00:00:00Z"), ZoneId.of("UTC"));
+    private final LocalDateTime localDateTime = LocalDateTime.now(clock);
 
 
     @Test

@@ -47,7 +47,7 @@ public abstract class BaseSchema {
     }
 
     protected <T extends BaseEntity> void useBaseEntity(T entity) {
-        id        = entity.getId();
+        id = entity.getId();
 
         deletedAt = entity.getDeletedAt();
         updatedAt = entity.getUpdatedAt();

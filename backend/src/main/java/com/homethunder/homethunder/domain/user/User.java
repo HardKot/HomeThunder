@@ -2,7 +2,8 @@ package com.homethunder.homethunder.domain.user;
 
 import com.homethunder.homethunder.domain.BaseEntity;
 import com.homethunder.homethunder.domain.Rule;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -33,7 +34,7 @@ public class User extends BaseEntity {
     public Set<Rule> getActiveRule() {
         Set<Rule> ruleSet = getRole().getRules();
 
-        for (RuleDetail rule: ruleDetailSet) {
+        for (RuleDetail rule : ruleDetailSet) {
             if (rule.isActive()) ruleSet.add(rule.rule);
         }
 

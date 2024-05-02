@@ -9,7 +9,6 @@ import com.homethunder.homethunder.infrastructure.db.repository.UserRepository;
 import com.homethunder.homethunder.infrastructure.db.schema.TokenSchema;
 import com.homethunder.homethunder.infrastructure.db.schema.UserSchema;
 import lombok.AllArgsConstructor;
-
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

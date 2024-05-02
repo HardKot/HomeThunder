@@ -1,8 +1,8 @@
 package com.homethunder.homethunder.infrastructure.user;
 
 
-import com.homethunder.homethunder.domain.user.User;
 import com.homethunder.homethunder.domain.user.IUserGateway;
+import com.homethunder.homethunder.domain.user.User;
 import com.homethunder.homethunder.infrastructure.db.repository.UserRepository;
 import com.homethunder.homethunder.infrastructure.db.schema.UserSchema;
 import lombok.AllArgsConstructor;

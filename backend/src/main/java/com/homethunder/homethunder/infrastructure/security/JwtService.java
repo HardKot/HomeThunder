@@ -1,15 +1,17 @@
 package com.homethunder.homethunder.infrastructure.security;
 
 import com.homethunder.homethunder.domain.security.Token;
-import com.homethunder.homethunder.infrastructure.db.schema.TokenSchema;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
-import java.time.*;
+import java.time.Duration;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
@@ -37,7 +39,6 @@ public class JwtService {
                 .signWith(getSecretKey())
                 .compact();
     }
-
 
 
     public String extractEmail(String token) {

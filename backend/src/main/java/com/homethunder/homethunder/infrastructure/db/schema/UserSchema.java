@@ -58,19 +58,19 @@ public class UserSchema extends BaseSchema {
     public UserSchema(User entity) {
         useBaseEntity(entity);
 
-        firstname     = entity.getFirstname();
-        lastname      = entity.getLastname();
-        patronymic    = entity.getPatronymic();
+        firstname = entity.getFirstname();
+        lastname = entity.getLastname();
+        patronymic = entity.getPatronymic();
 
-        avatarURI     = entity.getAvatarURI();
-        gender        = entity.getGender();
-        birthday      = entity.getBirthday();
+        avatarURI = entity.getAvatarURI();
+        gender = entity.getGender();
+        birthday = entity.getBirthday();
 
-        phone         = entity.getPhone();
-        email         = entity.getEmail();
+        phone = entity.getPhone();
+        email = entity.getEmail();
 
-        password      = entity.getPassword();
-        bannedBefore  = entity.getBannedBefore();
+        password = entity.getPassword();
+        bannedBefore = entity.getBannedBefore();
 
         ruleDetailSet = entity.getRuleDetailSet().stream().map(RuleDetailSchema::new).collect(Collectors.toSet());
 //        roleDetail    = new RoleDetailSchema(entity.getRoleDetail());
@@ -106,10 +106,11 @@ public class UserSchema extends BaseSchema {
         private Rule rule;
         private LocalDateTime activateEnd;
 
-        public RuleDetailSchema() {}
+        public RuleDetailSchema() {
+        }
 
         public RuleDetailSchema(User.RuleDetail ruleDetail) {
-            rule        = ruleDetail.getRule();
+            rule = ruleDetail.getRule();
             activateEnd = ruleDetail.getActivateEnd();
         }
 
@@ -127,10 +128,11 @@ public class UserSchema extends BaseSchema {
         private RoleSchema role;
         private LocalDateTime activateEnd;
 
-        public RoleDetailSchema() {}
+        public RoleDetailSchema() {
+        }
 
         public RoleDetailSchema(User.RoleDetail roleDetail) {
-            role        = new RoleSchema(roleDetail.getRole());
+            role = new RoleSchema(roleDetail.getRole());
             activateEnd = roleDetail.getActivateTo();
         }
 

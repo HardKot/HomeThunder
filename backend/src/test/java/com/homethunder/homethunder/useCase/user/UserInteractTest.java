@@ -22,10 +22,8 @@ import static org.mockito.Mockito.mockStatic;
 
 class UserInteractTest {
 
-    private IUserGateway userGateway;
-
     private final UserInteract userInteract = new UserInteract();
-
+    private IUserGateway userGateway;
     private User testUser;
 
     @BeforeEach
@@ -66,7 +64,7 @@ class UserInteractTest {
         Mockito.when(userRegistrationDTO.password()).thenReturn("password");
         Mockito.when(userRegistrationDTO.confirmPassword()).thenReturn("password");
         Mockito.when(userRegistrationDTO.ip()).thenReturn("127.0.0.1");
-        Mockito.when(userRegistrationDTO.deviceName()).thenReturn( "Test");
+        Mockito.when(userRegistrationDTO.deviceName()).thenReturn("Test");
         return userRegistrationDTO;
     }
 

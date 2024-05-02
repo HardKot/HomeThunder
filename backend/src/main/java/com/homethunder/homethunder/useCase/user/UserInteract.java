@@ -1,7 +1,7 @@
 package com.homethunder.homethunder.useCase.user;
 
-import com.homethunder.homethunder.domain.user.User;
 import com.homethunder.homethunder.domain.user.IUserGateway;
+import com.homethunder.homethunder.domain.user.User;
 import com.homethunder.homethunder.useCase.user.dto.IUserNewPassword;
 import com.homethunder.homethunder.useCase.user.dto.IUserRegistration;
 import com.homethunder.homethunder.useCase.user.dto.IUserUpdate;
@@ -19,8 +19,10 @@ public class UserInteract {
     private IUserGateway userGateway;
 
     public Result<User, UserInteractError> registration(IUserRegistration dto) {
-        if (!dto.password().equals(dto.confirmPassword())) return Results.failure(new UserInteractError.PasswordNotConfirm());
-        if (userGateway.findByEmail(dto.email()).isPresent()) return Results.failure(new UserInteractError.EmailExists());
+        if (!dto.password().equals(dto.confirmPassword()))
+            return Results.failure(new UserInteractError.PasswordNotConfirm());
+        if (userGateway.findByEmail(dto.email()).isPresent())
+            return Results.failure(new UserInteractError.EmailExists());
 
         User user = new User();
 
@@ -35,7 +37,7 @@ public class UserInteract {
 
         userGateway.create(user);
 
-        String token = userGateway.generateTokenForEmail(user,"registration");
+        String token = userGateway.generateTokenForEmail(user, "registration");
         userGateway.sendEmail(user, token);
 
         return Results.success(user);
@@ -55,7 +57,8 @@ public class UserInteract {
     }
 
     public Result<User, UserInteractError> changePassword(User user, IUserNewPassword dto) {
-        if (!dto.password().equals(dto.confirmPassword())) return Results.failure(new UserInteractError.PasswordNotConfirm());
+        if (!dto.password().equals(dto.confirmPassword()))
+            return Results.failure(new UserInteractError.PasswordNotConfirm());
 
         user.setPassword(userGateway.passwordEncoder(dto.password()));
 
@@ -76,7 +79,8 @@ public class UserInteract {
 
     public Result<User, UserInteractError> requestChangeEmail(User user, String email) {
         Optional<User> emailCheck = userGateway.findByEmail(email);
-        if (emailCheck.isPresent() && !emailCheck.get().equals(user)) return Results.failure(new UserInteractError.EmailExists());
+        if (emailCheck.isPresent() && !emailCheck.get().equals(user))
+            return Results.failure(new UserInteractError.EmailExists());
 
         user.setEmail(email);
         String token = userGateway.generateTokenForEmail(user, "changeEmail");

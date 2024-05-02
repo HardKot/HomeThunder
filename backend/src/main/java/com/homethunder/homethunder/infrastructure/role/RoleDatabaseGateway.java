@@ -1,8 +1,8 @@
 package com.homethunder.homethunder.infrastructure.role;
 
 
-import com.homethunder.homethunder.domain.user.Role;
 import com.homethunder.homethunder.domain.user.IRoleGateway;
+import com.homethunder.homethunder.domain.user.Role;
 import com.homethunder.homethunder.infrastructure.db.repository.RoleRepository;
 import com.homethunder.homethunder.infrastructure.db.schema.RoleSchema;
 

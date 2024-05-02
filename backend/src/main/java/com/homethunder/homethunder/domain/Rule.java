@@ -1,7 +1,6 @@
 package com.homethunder.homethunder.domain;
 
 
-
 public enum Rule {
     // Работа с пользователями
     userDelete,
