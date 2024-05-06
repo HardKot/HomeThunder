@@ -1,11 +1,10 @@
-package com.homethunder.homethunder.useCase.post;
+package com.homethunder.homethunder.useCase.post.dto;
 
-import com.homethunder.homethunder.domain.user.User;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public interface CreatePostDTO {
+public interface ICreatePostDTO {
     String title();
 
     String content();
@@ -16,7 +15,6 @@ public interface CreatePostDTO {
 
     LocalDateTime dateTimePublish();
 
-    User author();
 
-    UUID PostCategoryID();
+    UUID postCategoryID();
 }

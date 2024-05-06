@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.annotation.Nullable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 @Data
@@ -35,5 +36,9 @@ public abstract class BaseEntity {
 
     public void recover() {
         deletedAt = null;
+    }
+
+    public boolean equals(BaseEntity other) {
+        return Objects.nonNull(id) && id.equals(other.getId());
     }
 }

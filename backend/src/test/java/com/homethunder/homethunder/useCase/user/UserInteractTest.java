@@ -231,17 +231,17 @@ class UserInteractTest {
         }
     }
 
-    @Tag("Recovery")
-    @Test
-    void recoveryTest() {
-        testUser.setDeletedAt(LocalDateTime.of(2024, Month.MAY, 12, 0, 0));
-
-        Result<User, UserInteractError> result = userInteract.recovery(testUser);
-
-        Assertions.assertTrue(result.hasSuccess());
-        Assertions.assertTrue(result.getSuccess().isPresent());
-        Assertions.assertNull(result.getSuccess().get().getDeletedAt());
-    }
+//    @Tag("Recovery")
+//    @Test
+//    void recoveryTest() {
+//        testUser.setDeletedAt(LocalDateTime.of(2024, Month.MAY, 12, 0, 0));
+//
+//        Result<User, UserInteractError> result = userInteract.recovery(testUser);
+//
+//        Assertions.assertTrue(result.hasSuccess());
+//        Assertions.assertTrue(result.getSuccess().isPresent());
+//        Assertions.assertNull(result.getSuccess().get().getDeletedAt());
+//    }
 
     @Tag("RequestChangEmail")
     @Test

@@ -10,7 +10,7 @@ import java.util.UUID;
 
 
 @Data
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostCategory extends BaseEntity {

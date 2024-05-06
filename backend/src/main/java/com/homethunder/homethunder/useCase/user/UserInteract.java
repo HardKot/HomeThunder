@@ -71,11 +71,11 @@ public class UserInteract {
         return Results.success(userGateway.update(user));
     }
 
-    public Result<User, UserInteractError> recovery(User user) {
-        user.setDeletedAt(null);
-
-        return Results.success(userGateway.update(user));
-    }
+//    public Result<User, UserInteractError> recovery(User user) {
+//        user.setDeletedAt(null);
+//
+//        return Results.success(userGateway.update(user));
+//    }
 
     public Result<User, UserInteractError> requestChangeEmail(User user, String email) {
         Optional<User> emailCheck = userGateway.findByEmail(email);
