@@ -8,6 +8,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -25,4 +28,12 @@ public class Post extends BaseEntity {
 
     private User author;
     private PostCategory category;
+    private Set<PostTag> tags = Set.of();
+
+    public Set<PostTag> getTags() {
+        Set<PostTag> tags = new HashSet<>(this.tags);
+        if (Objects.nonNull(category)) tags.addAll(category.getTags());
+        return tags;
+    }
+
 }
