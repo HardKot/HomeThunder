@@ -4,24 +4,20 @@ import com.homethunder.homethunder.domain.BaseEntity;
 import com.homethunder.homethunder.domain.Rule;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 public class Role extends BaseEntity {
-    static public Role Owner = new Role("Owner");
-    static public Role Visitor = new Role("Visitor");
+    static public Role Owner = new Role();
+    static public Role Visitor = new Role();
+
     private String name;
     private String image;
     private Set<Rule> rules;
-
-    public Role() {
-    }
-
-    private Role(String name) {
-
-    }
 
     public boolean getAccess(Rule rule) {
         return rules.contains(rule);

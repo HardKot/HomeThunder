@@ -15,6 +15,7 @@ public interface ICreatePostDTO {
 
     LocalDateTime dateTimePublish();
 
-
     UUID postCategoryID();
+
+
 }
