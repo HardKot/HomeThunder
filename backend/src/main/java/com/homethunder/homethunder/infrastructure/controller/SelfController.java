@@ -37,17 +37,6 @@ public class SelfController {
 
         return ResponseEntity.ok(new UserDTO(user));
     }
-
-    @PostMapping("/recovery")
-    public ResponseEntity<?> recovery() {
-        UserSchema userSchema = authenticationFacade.getAuthentication();
-        Result<User, UserInteractError> result = userInteract.recovery(userSchema.toUser());
-        if (result.hasFailure()) return ResponseEntity.status(403).body(result.getFailure().get());
-        User user = result.getSuccess().get();
-
-        return ResponseEntity.ok(new UserDTO(user));
-    }
-
     @DeleteMapping
     public ResponseEntity<?> delete() {
         UserSchema userSchema = authenticationFacade.getAuthentication();
