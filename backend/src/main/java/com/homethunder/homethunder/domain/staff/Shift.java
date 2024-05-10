@@ -13,11 +13,11 @@ public class Shift extends BaseEntity {
     private Employee employee;
     private LocalDateTime start;
     private LocalDateTime end;
-    private List<Break> breaks;
+    private List<IBreak> breaks;
 
     private String comment;
 
-    public interface Break {
+    public interface IBreak {
         LocalDateTime start();
         LocalDateTime end();
         String comment();

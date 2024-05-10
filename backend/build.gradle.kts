@@ -39,6 +39,7 @@ dependencies {
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
     implementation("org.projectlombok:lombok:1.18.30")
     testImplementation("junit:junit:4.13.1")
+    testImplementation("org.testng:testng:7.1.0")
 
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
