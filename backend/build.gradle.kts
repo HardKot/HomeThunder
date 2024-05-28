@@ -4,7 +4,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.4"
 }
 
-group = "com.homethunder"
+group = "com"
 version = "0.0.1-SNAPSHOT"
 
 java {
@@ -35,9 +35,11 @@ dependencies {
     implementation("com.leakyabstractions:result:0.15.0.1")
 
     implementation("org.flywaydb:flyway-core")
-    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
-    implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
+//    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+//    implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
     implementation("org.projectlombok:lombok:1.18.30")
+    implementation("org.springframework.boot:spring-boot-starter-data-rest")
+    implementation("org.springframework.boot:spring-boot-starter-freemarker")
     testImplementation("junit:junit:4.13.1")
     testImplementation("org.testng:testng:7.1.0")
 
