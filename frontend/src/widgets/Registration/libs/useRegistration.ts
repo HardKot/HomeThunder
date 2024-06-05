@@ -11,7 +11,7 @@ export const useRegistration = () => {
   const router = useRouter();
 
   const registration = useCallback(async (form: RegistrationForm) => {
-    await registrationTrigger(form)
+    await registrationTrigger(form).unwrap()
     router.push("/home")
   }, [router, registrationTrigger])
 

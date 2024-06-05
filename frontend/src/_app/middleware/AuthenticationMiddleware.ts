@@ -8,6 +8,8 @@ const publicRoutes = ['/login', '/registration']
 export const authenticationMiddleware = (request: NextRequest) => {
   const authManager = AuthManager.build();
   const token = authManager.getToken()
+
+
   if (!token && !publicRoutes.find(publicRoute => request.nextUrl.pathname.startsWith(publicRoute)))
     return NextResponse.redirect(new URL("/login", request.url));
 

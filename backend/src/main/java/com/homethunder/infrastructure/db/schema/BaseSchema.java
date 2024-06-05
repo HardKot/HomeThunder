@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -15,6 +16,7 @@ import java.util.UUID;
 
 @MappedSuperclass
 @Data
+@NoArgsConstructor
 public abstract class BaseSchema {
     @Id
     @GeneratedValue()
@@ -30,6 +32,19 @@ public abstract class BaseSchema {
 
     @Column(name = "deleted_at")
     protected LocalDateTime deletedAt;
+
+    public BaseSchema(BaseEntity entity) {
+        useBaseEntity(entity);
+    }
+
+    protected <T extends BaseEntity> T toBaseEntity(T entity) {
+        id = entity.getId();
+
+        deletedAt = entity.getDeletedAt();
+        updatedAt = entity.getUpdatedAt();
+        createdAt = entity.getCreatedAt();
+        return entity;
+    }
 
 
     public boolean getIsDeleted() {

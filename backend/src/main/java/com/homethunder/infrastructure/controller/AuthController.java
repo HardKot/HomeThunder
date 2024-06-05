@@ -49,8 +49,7 @@ public class AuthController {
         Parser uaParser = new Parser();
         Client client = uaParser.parse(userAgent);
 
-        return null;
-//        return ResponseEntity.ok(new AuthResponse(new UserDTO(user), jwtService.generateToken(userDetails, client.toString())));
+        return ResponseEntity.ok(new UserDTO(user));
     }
 
     @PostMapping("/login")

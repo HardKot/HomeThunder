@@ -27,7 +27,7 @@ public class SecurityConfig {
                     request.requestMatchers("/login").permitAll();
                     request.requestMatchers("/registration").permitAll();
 
-                    request.anyRequest().authenticated();
+                    request.anyRequest().permitAll();
                 })
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

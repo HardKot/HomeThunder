@@ -22,6 +22,7 @@ repositories {
 }
 
 extra["hillaVersion"] = "2.5.5"
+val springModulithVersion by extra("1.1.5")
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
@@ -35,8 +36,7 @@ dependencies {
     implementation("com.leakyabstractions:result:0.15.0.1")
 
     implementation("org.flywaydb:flyway-core")
-//    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
-//    implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
+
     implementation("org.projectlombok:lombok:1.18.30")
     implementation("org.springframework.boot:spring-boot-starter-data-rest")
     implementation("org.springframework.boot:spring-boot-starter-freemarker")
