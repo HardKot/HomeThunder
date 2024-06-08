@@ -4,5 +4,5 @@ import React, {useMemo} from "react";
 export const useStyle = (props: (theme: Theme) => {[key: string]: React.CSSProperties}) => {
   const theme = useTheme()
 
-  return  useMemo(() => props(theme), [theme, props])
+  return useMemo(() => props(theme), [theme, props])
 }

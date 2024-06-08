@@ -1,40 +1,48 @@
-import { RadioGroup, RadioGroupProps } from "@mui/material";
-import { createContext, useContext } from "react";
+import { FormControlLabel, Radio, RadioGroup, RadioGroupProps, RadioProps } from "@mui/material";
+import { createContext, useContext, FC } from "react";
 import { Control, Controller, ControllerRenderProps, FieldValues } from "react-hook-form";
+
 
 interface FormRadioGroupProps<TFieldValues extends FieldValues = FieldValues> extends RadioGroupProps {
 	name: string;
-	control: Control<FieldValues>;
+	control: Control<TFieldValues>;
+}
+
+interface FormRadioGroupComponent<TFieldValues extends FieldValues = FieldValues> extends FC<FormRadioGroupProps<TFieldValues>> {
+	Radio: FC<FormRadioGroupRadioProps>;
+}
+
+interface FormRadioGroupRadioProps extends RadioProps {
+	label: string;
+	value: string;
 }
 
 
-const FormRadioContext = createContext<ControllerRenderProps<any, any>| null>(null);
-const useFormRadioContext = () => {
-	const context = useContext(FormRadioContext);
-	if (!context) throw new Error("Context not found");
-	return context;
-}
 
-function FormRadioGroup({ name, control, children, ...props}: FormRadioGroupProps) {
-	return (
+
+const FormRadioGroup: FormRadioGroupComponent = ({ name, control, children, ...props}) => (
 		<Controller
 			name={name}
 			control={control}
 			render={({ field }) => 
 				<RadioGroup {...field} {...props}>
-					<FormRadioContext.Provider value={field}>
-						{children}
-					</FormRadioContext.Provider>
+					{children}
 				</RadioGroup>
 			}
 			/>
 	);
-}
 
-FormRadioGroup.Radio = (...props) => {
-	const field = useFormRadioContext();
-	
-	return (
-		<FormCo
-	)
-}
+
+const FormRadioGroupRadio = ({ label, value, ...props }: FormRadioGroupRadioProps) => (
+	<FormControlLabel 
+		value={value}
+		label={label}
+		control={<Radio {...props}/>}
+	/>
+)
+
+
+FormRadioGroup.Radio = FormRadioGroupRadio;
+
+
+export default FormRadioGroup;
