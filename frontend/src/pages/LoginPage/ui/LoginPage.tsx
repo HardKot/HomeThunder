@@ -1,26 +1,35 @@
-import { LayoutOneComponentComponent } from "@/shared/components/LayoutOneComponentComponent";
-import { Grid, Link } from "@mui/material";
-import { Login } from "@/widgets/Login/ui/Login";
-import { useLoginPage } from "../libs/useLoginPage";
+import { Box, CssBaseline, Grid, Link, Paper, Typography } from "@mui/material";
 
-export const LoginPage = () => {
-  const {  } = useLoginPage();
+export const LoginPage = () => (
+  <Grid container component={"main"} sx={{ height: "100vh" }}>
+    <CssBaseline />
 
-  return (
-    <LayoutOneComponentComponent>
-      <Login />
-      <Grid container>
-        <Grid item xs>
-          <Link href="#" variant="body2">
-            Восстановить пароль
-          </Link>
-        </Grid>
-        <Grid item>
-          <Link href="/registration" variant="body2">
-            Зарегистрироваться
-          </Link>
-        </Grid>
-      </Grid>
-    </LayoutOneComponentComponent>
-  );
-};
+    <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      <Box
+        sx={{
+          my: 8,
+          mx: 4,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Typography component="h1" variant="h5">
+          Вход
+        </Typography>
+      </Box>
+    </Grid>
+    <Grid
+      item
+      sm={4}
+      md={7}
+      sx={{
+        backgroundImage: "url(/static/background.jpeg)",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+      xs={false}
+    />
+  </Grid>
+);

@@ -1,8 +1,8 @@
-'use server'
+"use server";
 
-import {redirect} from "next/navigation";
-import {WebApi} from "@/shared/api/WebApi";
-import {AuthManager} from "@/shared/api/AuthManager";
+import { redirect } from "next/navigation";
+import { WebApi } from "@/shared/api/WebApi";
+import { AuthManager } from "@/shared/api/AuthManager";
 
 export const loginByEmail = async (formBody: string, rememberMe = false) => {
   const authManager = AuthManager.build();
@@ -12,10 +12,10 @@ export const loginByEmail = async (formBody: string, rememberMe = false) => {
     return response.status;
   }
 
-  const data = await response.json()
-  authManager.setToken(data.token)
+  const data = await response.json();
+  authManager.setToken(data.token);
 
-  redirect("/")
+  redirect("/");
 
   return response.status;
-}
+};

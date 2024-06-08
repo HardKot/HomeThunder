@@ -1,10 +1,10 @@
-import {FormProvider} from "react-hook-form";
-import {UserDataForm} from "@/features/UserDataForm";
-import {Button, Grid} from "@mui/material";
-import {useEditProfile} from "@/widgets/ProfileEdit/libs/useEditProfile";
+import { FormProvider } from "react-hook-form";
+import { UserDataForm } from "@/features/UserDataForm";
+import { Button, Grid } from "@mui/material";
+import { useEditProfile } from "@/widgets/ProfileEdit/libs/useEditProfile";
 
 export const ProfileEdit = () => {
-  const { formMethod, onSubmit } = useEditProfile()
+  const { formMethod, onSubmit } = useEditProfile();
 
   return (
     <Grid component={"form"} noValidate onSubmit={onSubmit}>
@@ -20,5 +20,5 @@ export const ProfileEdit = () => {
         </Button>
       </FormProvider>
     </Grid>
-  )
-}
+  );
+};

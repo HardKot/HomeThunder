@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { PropsWithChildren } from "react";
 import { LocalizationProvider as MUILocalizationProvider } from "@mui/x-date-pickers";

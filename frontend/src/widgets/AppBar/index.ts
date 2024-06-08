@@ -1,1 +1,1 @@
-export { AppBar } from "./ui/AppBar"
+export { AppBar } from "./ui/AppBar";

@@ -1,1 +1,1 @@
-export { ProfileEdit } from "./ui/ProfileEdit"
+export { ProfileEdit } from "./ui/ProfileEdit";

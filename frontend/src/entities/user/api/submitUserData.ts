@@ -1,6 +1,6 @@
-import {AuthManager} from "@/shared/api/AuthManager";
-import {WebApi} from "@/shared/api/WebApi";
-import {redirect} from "next/navigation";
+import { AuthManager } from "@/shared/api/AuthManager";
+import { WebApi } from "@/shared/api/WebApi";
+import { redirect } from "next/navigation";
 
 export const submitUserDataa = async (formBody: string) => {
   const authManager = AuthManager.build();
@@ -10,10 +10,10 @@ export const submitUserDataa = async (formBody: string) => {
     return response.status;
   }
 
-  const data = await response.json()
-  authManager.setToken(data.token)
+  const data = await response.json();
+  authManager.setToken(data.token);
 
-  redirect("/")
+  redirect("/");
 
   return response.status;
-}
+};

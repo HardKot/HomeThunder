@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "jest",
+    "formatted": "yarn prettier . --write"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
@@ -19,6 +20,7 @@
     "@mui/material": "^5.15.14",
     "@mui/material-nextjs": "^5.15.11",
     "@mui/x-date-pickers": "^7.1.0",
+    "@prisma/client": "^5.15.0",
     "@reduxjs/toolkit": "^2.2.2",
     "@stdlib/stdlib": "^0.2.0",
     "axios": "^1.6.8",
@@ -49,7 +51,7 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8",
-    "prettier": "3.2.5",
+    "prettier": "3.3.1",
     "prisma": "^5.11.0",
     "tailwindcss": "^3.3.0",
     "ts-jest": "^29.1.2",

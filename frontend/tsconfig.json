@@ -10,7 +10,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-		"experimentalDecorators": true, 
+    "experimentalDecorators": true,
     "jsx": "preserve",
     "incremental": true,
     "paths": {

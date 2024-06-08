@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useRegistration } from "@/widgets/Registration/libs/useRegistration";
 import Box from "@mui/material/Box";
@@ -7,13 +7,14 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { UserDataForm } from "@/features/UserDataForm";
 import { RegistrationByEmail } from "@/features/Registration/RegistrationByEmail";
-import {Controller, FormProvider, useFormContext} from "react-hook-form";
-import {MVVMProvider} from "@/shared/react-utils/MVVM";
-import {RegistrationForm} from "@/entities/user";
-import {TextField} from "@mui/material";
+import { Controller, FormProvider, useFormContext } from "react-hook-form";
+import { MVVMProvider } from "@/shared/react-utils/MVVM";
+import { RegistrationForm } from "@/entities/user";
+import { TextField } from "@mui/material";
 
-
-export const Registration = MVVMProvider(() => ({}),({}) => (
+export const Registration = MVVMProvider(
+  () => ({}),
+  ({}) => (
     <Box
       sx={{
         my: 8,
@@ -43,4 +44,5 @@ export const Registration = MVVMProvider(() => ({}),({}) => (
         </Button>
       </Grid>
     </Box>
-  ))
+  ),
+);

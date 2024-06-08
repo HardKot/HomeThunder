@@ -10,7 +10,7 @@ export const userAPI = createApi({
     registration: build.mutation<UserEntity, RegistrationForm>({
       query: (body) => ({
         url: "/registration",
-        method: 'POST',
+        method: "POST",
         body: {
           ...body,
           birthday: body.birthday.format("YYYY-MM-DD"),

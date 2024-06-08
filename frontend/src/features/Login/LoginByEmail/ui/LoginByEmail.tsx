@@ -5,7 +5,7 @@ import { useLoginByEmail } from "@/features/Login/LoginByEmail/libs/useLoginByEm
 export interface LoginProps {}
 
 export const LoginByEmail = ({}: LoginProps) => {
-  const {  control } = useLoginByEmail();
+  const { control } = useLoginByEmail();
 
   return (
     <>
@@ -13,7 +13,7 @@ export const LoginByEmail = ({}: LoginProps) => {
         name={"email"}
         control={control}
         rules={{ required: true }}
-        render={({ field, fieldState,  }) => (
+        render={({ field, fieldState }) => (
           <TextField
             {...field}
             error={!!fieldState.error?.message}
