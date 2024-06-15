@@ -1,18 +1,24 @@
 "use client"
-import { Button, MenuItem, TextField } from "@mui/material";
+import { Avatar, Button, MenuItem, TextField } from "@mui/material";
 
-import { FormContainer, SelectElement, TextFieldElement } from "react-hook-form-mui";
+import { Controller, FormContainer, SelectElement, TextFieldElement } from "react-hook-form-mui";
 import { DatePickerElement } from "react-hook-form-mui/date-pickers"
 import { FormUtils } from "@/shared/libs/FormUtils";
 import Lodash from "lodash";
 import moment from "moment";
 import CsrfToken from "@/shared/components/FormInput/CsrfToken";
-
+import PersonIcon from '@mui/icons-material/Person';
+import registrationByEmail from "../api/registrationByEmail";
+import { UploadFile } from "@/features/UploadFile/ui/UploadFile";
+  
 
 export const RegistrationByEmail = () => (
   <FormContainer
-    onSuccess={Lodash.flow(FormUtils.fromObject, (a) => console.log([...a.entries()]))}
+    onSuccess={Lodash.flow(FormUtils.fromObject, registrationByEmail)}
   >
+
+      <UploadFile name={"test"} />
+    
     <TextFieldElement
         name={"firstname"}
             margin="normal"

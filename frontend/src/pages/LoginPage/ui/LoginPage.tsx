@@ -3,6 +3,7 @@ import {LoginByEmail} from "@/features/Login/LoginByEmail";
 import {NoAuthComposite} from "@/shared/components/Layout/NoAuthComposite";
 import {useLoginPage} from "@/pages/LoginPage/libs/useLoginPage";
 import Link from "next/link";
+import { UploadFile } from "@/features/UploadFile/ui/UploadFile";
 
 
 export const LoginPage = () => {
@@ -12,7 +13,6 @@ export const LoginPage = () => {
       <Typography component="h1" variant="h5" margin="normal" align={"center"}>
         Вход
       </Typography>
-
       <LoginByEmail />
       <Link href={"/registration"}>
         <Button variant={"text"} color={"primary"} size={"small"} >Регистрация</Button>

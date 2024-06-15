@@ -1,7 +1,6 @@
 "use client"
 import { PropsWithChildren } from "react";
 import { Provider } from "inversify-react"
-import { appContainer } from "@/ioc/inversify.appContainer";
 import { TYPES } from "@/ioc";
 import { Container } from "inversify";
 
@@ -11,9 +10,9 @@ interface IocProviderProps extends PropsWithChildren {
 
 export const IocProvider = ({ children, csrfToken }: IocProviderProps) => (
   <Provider container={() => {
-    const container = new Container();
-    container.bind(TYPES.CSRFToken).toConstantValue(csrfToken);
-    return container;
+    const appContainer = new Container();
+    appContainer.bind(TYPES.CSRFToken).toConstantValue(csrfToken);
+    return appContainer;
   }}
   >
     {children}

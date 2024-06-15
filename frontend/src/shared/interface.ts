@@ -37,3 +37,18 @@ export interface IAuthService {
   loginByEmail(email: string, password: string, rememberMe: boolean): Promise<{ status: boolean, message: string }>
 
 }
+
+export interface IMinioConfig {
+  port: number,
+  endpoint: string,
+  accessKey: string,
+  secretKey: string,
+}
+
+export interface IFileUtils {
+ updateName(oldName: string): string 
+}
+
+export interface IFileStorage {
+ uploadInTemp(file: string, fileData: Buffer): Promise<string> 
+}
