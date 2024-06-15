@@ -1,30 +1,10 @@
-"use client";
-
-import { useForm } from "react-hook-form";
-import { UserLogin } from "@/entities/user/models/UserLogin";
-import { loginByEmail } from "@/features/Login/LoginByEmail/api/loginByEmail";
-import { useCallback } from "react";
+import {headers} from "next/headers";
 
 export const useLogin = () => {
-  const formMethod = useForm<UserLogin>({
-    defaultValues: { rememberMe: false },
-  });
+  const csrf_token = headers().get('X-CSRF-Token') || 'missing';
 
-  const login = useCallback(
-    ({ rememberMe, ...form }: UserLogin) =>
-      loginByEmail(JSON.stringify(form), rememberMe).then((status) => {
-        if (status === 400)
-          formMethod.setError(`email`, {
-            message: "Неверный логин или пароль",
-          });
-      }),
-    [],
-  );
-
-  const onSubmit = formMethod.handleSubmit(login);
 
   return {
-    formMethod,
-    onSubmit,
+    csrf_token
   };
 };

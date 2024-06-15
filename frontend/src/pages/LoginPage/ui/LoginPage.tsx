@@ -1,35 +1,23 @@
-import { Box, CssBaseline, Grid, Link, Paper, Typography } from "@mui/material";
+import { Button, CssBaseline, Grid, Paper, Typography } from "@mui/material";
+import {LoginByEmail} from "@/features/Login/LoginByEmail";
+import {NoAuthComposite} from "@/shared/components/Layout/NoAuthComposite";
+import {useLoginPage} from "@/pages/LoginPage/libs/useLoginPage";
+import Link from "next/link";
 
-export const LoginPage = () => (
-  <Grid container component={"main"} sx={{ height: "100vh" }}>
-    <CssBaseline />
 
-    <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-      <Box
-        sx={{
-          my: 8,
-          mx: 4,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Typography component="h1" variant="h5">
-          Вход
-        </Typography>
-      </Box>
-    </Grid>
-    <Grid
-      item
-      sm={4}
-      md={7}
-      sx={{
-        backgroundImage: "url(/static/background.jpeg)",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-      xs={false}
-    />
-  </Grid>
-);
+export const LoginPage = () => {
+  const { } = useLoginPage();
+  return (
+    <NoAuthComposite>
+      <Typography component="h1" variant="h5" margin="normal" align={"center"}>
+        Вход
+      </Typography>
+
+      <LoginByEmail />
+      <Link href={"/registration"}>
+        <Button variant={"text"} color={"primary"} size={"small"} >Регистрация</Button>
+      </Link>
+
+    </NoAuthComposite>
+  )
+};

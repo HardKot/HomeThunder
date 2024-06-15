@@ -1,61 +1,89 @@
-import { TextField } from "@mui/material";
+"use client"
+import { Button, MenuItem, TextField } from "@mui/material";
 
-import { Controller, useFormContext } from "react-hook-form";
-import { RegistrationForm } from "@/entities/user";
-import { MVVMProvider } from "@/shared/react-utils/MVVM";
+import { FormContainer, SelectElement, TextFieldElement } from "react-hook-form-mui";
+import { DatePickerElement } from "react-hook-form-mui/date-pickers"
+import { FormUtils } from "@/shared/libs/FormUtils";
+import Lodash from "lodash";
+import moment from "moment";
+import CsrfToken from "@/shared/components/FormInput/CsrfToken";
 
-export const RegistrationByEmail = MVVMProvider(
-  (props = {}) => ({ ...useFormContext<RegistrationForm>(), ...props }),
-  ({ control }) => (
-    <>
-      <Controller
+
+export const RegistrationByEmail = () => (
+  <FormContainer
+    onSuccess={Lodash.flow(FormUtils.fromObject, (a) => console.log([...a.entries()]))}
+  >
+    <TextFieldElement
+        name={"firstname"}
+            margin="normal"
+            required
+            fullWidth
+            label={"Имя"}
+            autoComplete="firstname"
+      />
+      <TextFieldElement
+        name={"lastname"}
+            margin="normal"
+            required
+            fullWidth
+            label={"Фамилия"}
+            autoComplete="lastname"
+      />
+      <TextFieldElement
+        name={"patronymic"}
+            margin="normal"
+            fullWidth
+            label={"Отчество"}
+            autoComplete="patronymic"
+      />
+      <SelectElement
+        name={"gender"}
+        label="Пол"
+        fullWidth
+        defaultValue={"Unknown"}
+        margin="normal"
+        options={[
+          { id: "Male", label: "Мужской" },
+          { id: "Female", label: "Женский" },
+          { id: "Unknown", label: "Не определенно" }
+        ]}
+        />
+      
+      <DatePickerElement
+        name={"birthday"}
+        label={"Дата рождения"}
+        disableFuture
+        
+        minDate={moment().date(1).month(1).year(1900)}
+      />
+      <TextFieldElement
         name={"email"}
-        control={control}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            margin="normal"
-            fullWidth
-            id="patronymic"
-            label={"Эл.почта"}
-            autoComplete="email"
-            required
-          />
-        )}
+        margin="normal"
+        fullWidth
+        label={"Эл.почта"}
+        autoComplete="email"
+        required
       />
 
-      <Controller
+      <TextFieldElement
         name={"password"}
-        control={control}
-        rules={{ required: true }}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            margin="normal"
-            required
-            fullWidth
-            id="password"
-            type={"password"}
-            label={"Пароль"}
-          />
-        )}
+        margin="normal"
+        required
+        fullWidth
+        type={"password"}
+        label={"Пароль"}
       />
-      <Controller
+      <TextFieldElement
         name={"confirmPassword"}
-        control={control}
-        rules={{ required: true }}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            margin="normal"
-            required
-            fullWidth
-            id="confirmPassword"
-            type={"password"}
-            label={"Подтверждение пароля"}
-          />
-        )}
+        margin="normal"
+        required
+        fullWidth
+        type={"password"}
+        label={"Подтверждение пароля"}
       />
-    </>
-  ),
-);
+      <CsrfToken />
+      <Button type={"submit"} variant={"contained"} fullWidth>
+          Зарегестрироваться
+      </Button>
+    </FormContainer>
+)  

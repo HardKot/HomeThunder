@@ -1,18 +1,18 @@
 import "reflect-metadata";
-import { IApiRPC } from "../interfaces";
+import {IApiRPC, ITokenManager} from "@/shared/interface"
 import { inject, injectable } from "inversify";
 import { TYPES } from "../types";
-import { AuthManager } from "./AuthManager";
 import axios from "axios";
 import { headers } from "next/headers";
+import "./axiosApp";
+
 
 @injectable()
-export class ApiRPC<Args = undefined, Return = undefined>
-  implements IApiRPC<Args, Return>
+export class ApiRPC implements IApiRPC
 {
-  constructor(@inject(TYPES.AuthManager) private authManager: AuthManager) {}
+  constructor(@inject(TYPES.TokenManager) private tokenManager: ITokenManager) {}
 
-  async execute(enpoint: string, args: Args) {
+  async execute<Args, Return>(enpoint: string, args: Args) {
     return axios
       .post<Return>(enpoint, args, {
         headers: {
@@ -24,7 +24,7 @@ export class ApiRPC<Args = undefined, Return = undefined>
   }
 
   private async getAuthHeader() {
-    return `Bearer ${await this.authManager.getToken()}`;
+    return `Bearer ${await this.tokenManager.getToken()}`;
   }
 
   private async getUserAgentHeader() {

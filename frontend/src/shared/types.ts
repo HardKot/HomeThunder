@@ -1,6 +1,6 @@
 const TYPES = {
   ApiRest: Symbol.for("IApiRest"),
-  AuthManager: Symbol.for("IAuthManager"),
+  TokenManager: Symbol.for("TokenManager"),
   ApiRPC: Symbol.for("IApiRPC"),
 };
 

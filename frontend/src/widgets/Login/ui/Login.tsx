@@ -1,11 +1,10 @@
-"use client";
 import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
 import { FormProvider } from "react-hook-form";
 import { useLogin } from "../libs/useLogin";
 import { LoginByEmail } from "@/features/Login/LoginByEmail";
 
 export const Login = () => {
-  const { onSubmit, formMethod } = useLogin();
+  const model = useLogin();
   return (
     <Box
       sx={{
@@ -20,20 +19,13 @@ export const Login = () => {
       <Typography component="h1" variant="h5">
         Вход
       </Typography>
-      <Grid component={"form"} noValidate onSubmit={onSubmit}>
-        <FormProvider {...formMethod}>
+      <Grid component={"form"} noValidate>
           <Grid container>
-            <LoginByEmail />
+            <LoginByEmail
+                CSRFToken={model.csrf_token}
+            />
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Войти
-          </Button>
-        </FormProvider>
+
       </Grid>
     </Box>
   );

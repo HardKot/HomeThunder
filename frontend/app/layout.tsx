@@ -1,6 +1,7 @@
 import { PropsWithChildren } from "react";
 import { Metadata } from "next";
 import { CombineProvider } from "@/app/providers/CombineProvider";
+import "@/styles/globals.css";
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (

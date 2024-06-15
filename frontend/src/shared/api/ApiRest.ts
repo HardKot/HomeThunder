@@ -1,17 +1,17 @@
-import { IApiRest } from "@/shared/interfaces";
-import { IEntity } from "../interfaces";
+import { IApiRest } from "@/ioc/interface";
 import axios from "axios";
 import { headers } from "next/headers";
-import { AuthManager } from "./AuthManager";
 import { inject, injectable } from "inversify";
 import { TYPES } from "../types";
 import "reflect-metadata";
+import {IEntity, ITokenManager} from "@/shared/interface";
+import "./axiosApp";
 
 @injectable()
 export class ApiRest<Entity extends IEntity = IEntity>
   implements IApiRest<Entity>
 {
-  constructor(@inject(TYPES.AuthManager) private authManager: AuthManager) {}
+  constructor(@inject(TYPES.TokenManager) private tokenManager: ITokenManager) {}
 
   async get<Params = undefined>(endpoint: string, params: Params) {
     return axios.get<Entity[]>(`${endpoint}`, {
@@ -60,7 +60,7 @@ export class ApiRest<Entity extends IEntity = IEntity>
   }
 
   private async getAuthHeader() {
-    return `Bearer ${await this.authManager.getToken()}`;
+    return `Bearer ${await this.tokenManager.getToken()}`;
   }
 
   private async getUserAgentHeader() {

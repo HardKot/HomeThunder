@@ -21,7 +21,7 @@ export interface IApiRest<Entity extends IEntity = IEntity> {
   delete(endpoint: string, id: string): Promise<void>;
 }
 
-export interface IAuthManager {
+export interface ITokenManager {
   getToken(): Promise<string | null>;
   setToken(token: string): Promise<void>;
   removeToken(): Promise<void>;
@@ -29,6 +29,11 @@ export interface IAuthManager {
   hasAccess(rule: string): Promise<boolean>;
 }
 
-export interface IApiRPC<Args = undefined, Return = undefined> {
-  execute(enpoint: string, args: Args): Promise<Return>;
+export interface IApiRPC {
+  execute<Args = undefined, Return = undefined>(enpoint: string, args?: Args): Promise<Return>;
+}
+
+export interface IAuthService {
+  loginByEmail(email: string, password: string, rememberMe: boolean): Promise<{ status: boolean, message: string }>
+
 }

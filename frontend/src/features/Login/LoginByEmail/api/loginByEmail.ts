@@ -1,21 +1,22 @@
 "use server";
 
-import { redirect } from "next/navigation";
-import { WebApi } from "@/shared/api/WebApi";
-import { AuthManager } from "@/shared/api/AuthManager";
+import {IApiRest, IApiRPC, ITokenManager} from "@/shared/interface";
+import {TYPES} from "@/ioc";
+import { bindServerDependencies } from "@/ioc/inversify.serverContainer";
 
-export const loginByEmail = async (formBody: string, rememberMe = false) => {
-  const authManager = AuthManager.build();
-  const response = await WebApi.client.post("/login", formBody);
+async function loginByEmail(
+  apiRpc: IApiRPC,
+  tokenManager: ITokenManager,
+  form: FormData
+  ) {
 
-  if (!response.ok) {
-    return response.status;
-  }
+  const data = await apiRpc.execute("/auth/login", {
+    email: form.get("email"),
+    password: form.get("password"),
+  })
 
-  const data = await response.json();
-  authManager.setToken(data.token);
+  return 200;
+}
 
-  redirect("/");
 
-  return response.status;
-};
+export default bindServerDependencies([TYPES.ApiRPC, TYPES.TokenManager], loginByEmail) as (form: FormData) => Promise<number>

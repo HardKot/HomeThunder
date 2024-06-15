@@ -1,11 +1,11 @@
 import { cookies } from "next/headers";
 import { jwtDecode } from "jwt-decode";
 import { injectable } from "inversify";
-import { IAuthManager } from "@/shared/interfaces";
+import { ITokenManager } from "@/shared/interface";
 import "reflect-metadata";
 
 @injectable()
-export class AuthManager implements IAuthManager {
+export class TokenManager implements ITokenManager {
   private COOKIE_NAME = "Authorization";
 
   async getToken() {

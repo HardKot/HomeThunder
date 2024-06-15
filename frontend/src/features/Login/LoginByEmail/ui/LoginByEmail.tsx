@@ -1,62 +1,51 @@
-import { Checkbox, FormControlLabel, TextField } from "@mui/material";
-import { Controller } from "react-hook-form";
+"use client"
+import {Button} from "@mui/material";
 import { useLoginByEmail } from "@/features/Login/LoginByEmail/libs/useLoginByEmail";
+import {CheckboxElement, FormContainer, TextFieldElement} from "react-hook-form-mui";
+import {Controller} from "react-hook-form";
+import loginByEmail from "@/features/Login/LoginByEmail/api/loginByEmail";
+import Box from "@mui/material/Box";
+import { FormUtils } from "@/shared/libs/FormUtils";
+import Lodash from "lodash";
+import CsrfToken from "@/shared/components/FormInput/CsrfToken";
 
-export interface LoginProps {}
+export interface LoginProps {
+}
 
-export const LoginByEmail = ({}: LoginProps) => {
-  const { control } = useLoginByEmail();
+export const LoginByEmail = ({ }: LoginProps) => {
 
   return (
-    <>
-      <Controller
+    <FormContainer
+      FormProps={{
+      }}
+      onSuccess={Lodash.flow(FormUtils.fromObject, loginByEmail)}
+    >
+      <TextFieldElement
         name={"email"}
-        control={control}
         rules={{ required: true }}
-        render={({ field, fieldState }) => (
-          <TextField
-            {...field}
-            error={!!fieldState.error?.message}
-            helperText={fieldState.error?.message}
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label={"Эл.почта"}
-            autoComplete="email"
-            autoFocus
-          />
-        )}
+        label={"Эл.почта"}
+        autoComplete="email"
+        fullWidth
+        margin="normal"
       />
-      <Controller
+      <TextFieldElement
         name={"password"}
-        control={control}
         rules={{ required: true }}
-        render={({ field, fieldState }) => (
-          <TextField
-            {...field}
-            error={!!fieldState.error?.message}
-            margin="normal"
-            required
-            fullWidth
-            id="password"
-            type={"password"}
-            label={"Пароль"}
-            autoComplete="password"
-            autoFocus
-          />
-        )}
+        type={"password"}
+        label={"Пароль"}
+        autoComplete="password"
+        fullWidth
+        margin="normal"
       />
-      <Controller
-        name={"rememberMe"}
-        control={control}
-        render={({ field }) => (
-          <FormControlLabel
-            control={<Checkbox {...field} color="primary" />}
-            label={"Запомнить меня"}
-          />
-        )}
-      />
-    </>
+      <Box className={"flex justify-between items-center"}>
+        <CheckboxElement
+          name={"rememberMe"}
+          label={"Запомнить меня"}
+        />
+        <CsrfToken />
+        <Button variant={"text"}>Забыли пароль?</Button>
+      </Box>
+      <Button type={"submit"} variant={"contained"} fullWidth>Войти</Button>
+    </FormContainer>
   );
 };
